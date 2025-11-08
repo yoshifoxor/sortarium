@@ -1,23 +1,133 @@
-import { defineConfig, globalIgnores } from 'eslint/config';
-import nextVitals from 'eslint-config-next/core-web-vitals';
-import nextTs from 'eslint-config-next/typescript';
-
+import js from '@eslint/js';
+import pluginNext from '@next/eslint-plugin-next';
+import pluginStylistic from '@stylistic/eslint-plugin';
+import tseslintParser from '@typescript-eslint/parser';
+import eslintConfigPrettier from 'eslint-config-prettier';
+import pluginReact from 'eslint-plugin-react';
+import pluginHooks from 'eslint-plugin-react-hooks';
 import pluginImport from 'eslint-plugin-import';
 import pluginTailwind from 'eslint-plugin-better-tailwindcss';
+import tseslint from 'typescript-eslint';
 
-import eslintConfigPrettier from './eslint.config.prettier.mjs';
+export default [
+  {
+    files: ['*.js', '*.jsx', '*.ts', '*.tsx'],
+  },
+  {
+    ignores: [
+      '**/tsconfig.json',
+      '**/eslint.config.mjs',
+      '**/next.config.mjs',
+      '**/postcss.config.mjs',
+      '**/prettier.config.mjs',
+      '**/next-env.d.ts',
+      '**/tailwind.config.ts',
+      '**/bin/',
+      '**/build/',
+      '**/obj/',
+      '**/out/',
+      '**/.next/',
+    ],
+  },
+  {
+    name: 'next/core-web-vitals',
+    plugins: {
+      '@next/next': pluginNext,
+    },
+    rules: {
+      ...pluginNext.configs.recommended.rules,
+      ...pluginNext.configs['core-web-vitals'].rules,
+    },
+  },
+  {
+    name: 'eslint/recommended',
+    rules: {
+      ...js.configs.recommended.rules,
 
-const eslintConfig = defineConfig([
-  ...nextVitals,
-  ...nextTs,
-  // Override default ignores of eslint-config-next.
-  globalIgnores([
-    // Default ignores of eslint-config-next:
-    '.next/**',
-    'out/**',
-    'build/**',
-    'next-env.d.ts',
-  ]),
+      'no-useless-rename': 'error',
+      'no-underscore-dangle': ['error', { allow: ['_id', '__dirname'] }],
+    },
+  },
+  {
+    name: 'eslint/stylistic',
+    plugins: {
+      '@stylistic': pluginStylistic,
+    },
+    rules: {
+      ...pluginStylistic.configs.recommended.rules,
+
+      '@stylistic/array-bracket-spacing': ['error', 'never'],
+      '@stylistic/arrow-parens': 'off',
+      '@stylistic/computed-property-spacing': ['error', 'never'],
+      '@stylistic/func-call-spacing': ['error', 'never'],
+      '@stylistic/indent': ['off', 2],
+      '@stylistic/jsx-closing-tag-location': 'error',
+      '@stylistic/jsx-one-expression-per-line': [
+        'error',
+        { allow: 'single-line' },
+      ],
+      '@stylistic/member-delimiter-style': ['error'],
+      '@stylistic/no-multiple-empty-lines': ['error', { max: 1, maxEOF: 1 }],
+      '@stylistic/no-trailing-spaces': 'error',
+      '@stylistic/object-curly-spacing': ['error', 'always'],
+      '@stylistic/operator-linebreak': ['error', 'before'],
+      '@stylistic/semi': 'off',
+      '@stylistic/space-before-function-paren': [
+        'error',
+        { asyncArrow: 'always', named: 'never' },
+      ],
+      '@stylistic/space-in-parens': ['error', 'never'],
+      '@stylistic/spaced-comment': [
+        'error',
+        'always',
+        { exceptions: ['-', '+'] },
+      ],
+    },
+  },
+  ...tseslint.configs.recommendedTypeChecked,
+  {
+    name: 'typescript',
+    languageOptions: {
+      parser: tseslintParser,
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+    plugins: {
+      ['@typescript-eslint']: tseslint.plugin,
+    },
+    rules: {
+      ...tseslint.configs.recommendedTypeChecked.rules,
+      '@typescript-eslint/no-unused-vars': ['error'],
+      '@typescript-eslint/no-unsafe-assignment': ['off'],
+      '@typescript-eslint/require-await': ['off'],
+    },
+  },
+  {
+    name: 'react/jsx-runtime',
+    plugins: {
+      react: pluginReact,
+    },
+    rules: {
+      ...pluginReact.configs['jsx-runtime'].rules,
+      'react/self-closing-comp': ['error', { component: true, html: false }],
+      'react/jsx-curly-brace-presence': 'error',
+    },
+    settings: {
+      react: {
+        version: 'detect',
+      },
+    },
+  },
+  {
+    name: 'react-hooks/recommended',
+    plugins: {
+      'react-hooks': pluginHooks,
+    },
+    rules: pluginHooks.configs.recommended.rules,
+  },
+
   {
     name: 'plugin-import',
     settings: {
@@ -90,6 +200,4 @@ const eslintConfig = defineConfig([
     },
   },
   eslintConfigPrettier,
-]);
-
-export default eslintConfig;
+];
