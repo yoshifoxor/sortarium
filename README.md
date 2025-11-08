@@ -1,38 +1,48 @@
-# sortarium
+# Sortarium
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Next.js と Tailwind CSS を使用したモダンなウェブアプリケーションです。
 
-## Getting Started
+## 機能
 
-First, run the development server:
+- Next.js 15.5.6 による最新のウェブアプリケーション開発
+- Tailwind CSS によるスタイリング
+- ESLint と Prettier による一貫したコードフォーマット
+- TypeScript による型安全な開発
+
+## 必要条件
+
+- Node.js（v22）
+- pnpm パッケージマネージャー
+
+## インストール
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# リポジトリのクローン
+git clone https://github.com/yoshifoxor/sortarium.git
+cd sortarium
+
+# 依存関係のインストール
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 開発
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# 開発サーバーの起動
+pnpm dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+開発サーバーは http://localhost:3000 で起動します。
 
-## Learn More
+## スクリプト
 
-To learn more about Next.js, take a look at the following resources:
+- `pnpm dev` - 開発サーバーの起動
+- `pnpm build` - プロダクションビルドの作成
+- `pnpm start` - プロダクションサーバーの起動
+- `pnpm lint` - ESLint による静的コード解析の実行
+- `pnpm format` - Prettier によるコードフォーマットのチェック
+- `pnpm format:fix` - Prettier によるコードフォーマットの自動修正
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## ライセンス
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+このプロジェクトは LICENSE ファイルに記載されているライセンスの下で公開されています。
