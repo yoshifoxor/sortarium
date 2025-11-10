@@ -132,7 +132,10 @@ export default [
     name: 'plugin-import',
     settings: {
       'import/resolver': {
-        typescript: true,
+        typescript: {
+          alwaysTryTypes: true,
+          project: './tsconfig.json',
+        },
       },
     },
     plugins: pluginImport.flatConfigs.recommended.plugins,
@@ -157,11 +160,6 @@ export default [
               position: 'before',
             },
             { pattern: 'next/**', group: 'builtin', position: 'before' },
-            {
-              pattern: '@mui/**',
-              group: 'parent',
-              position: 'before',
-            },
             {
               pattern: '@/**',
               group: 'parent',
@@ -193,10 +191,11 @@ export default [
       // enable all recommended rules to report an error
       ...pluginTailwind.configs['recommended-error'].rules,
 
-      'enforce-consistent-line-wrapping': [
+      'better-tailwindcss/enforce-consistent-line-wrapping': [
         'error',
         { group: 'newLine', preferSingleLine: true, printWidth: 80 },
       ],
+      'better-tailwindcss/no-unregistered-classes': 'error',
     },
   },
   eslintConfigPrettier,

@@ -1,5 +1,6 @@
+import { BioRhyme } from 'next/font/google';
+
 import type { Metadata } from 'next';
-import { BioRhyme, Geist_Mono } from 'next/font/google';
 
 import './globals.css';
 
@@ -7,10 +8,10 @@ const bioRhyme = BioRhyme({
   variable: '--font-bio-rhyme',
   subsets: ['latin'],
 });
-const geistMono = Geist_Mono({
+/* const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
   subsets: ['latin'],
-});
+}); */
 
 export const metadata: Metadata = {
   title: 'Sortarium | Sorting Visualizer',
