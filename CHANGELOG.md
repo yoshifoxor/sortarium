@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.2](https://github.com/yoshifoxor/sortarium/compare/v0.1.1...v0.1.2) (2025-11-10)
+
+
+### Features
+
+* add header component ([09ba8a8](https://github.com/yoshifoxor/sortarium/commit/09ba8a8debbfd2fc90d9e5e827063157cbe66660))
+* add new favicons ([c2e9e5c](https://github.com/yoshifoxor/sortarium/commit/c2e9e5ca3b5dd684bfa277cc8fb0d7448ecb15ff))
+
 ## [0.1.1](https://github.com/yoshifoxor/sortarium/compare/v0.1.0...v0.1.1) (2025-11-08)
 
 
