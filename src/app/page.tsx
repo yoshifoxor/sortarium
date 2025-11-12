@@ -2,7 +2,7 @@ import { Header } from "@/components/header";
 
 export default function Home() {
   return (
-    <div className="bg-background text-center font-sans">
+    <div className="font-sans">
       <Header />
     </div>
   );

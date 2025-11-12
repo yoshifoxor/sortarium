@@ -1,5 +1,7 @@
 # Sortarium
 
+![Vercel Deploy](https://deploy-badge.vercel.app/vercel/sortarium)
+
 Next.js と Tailwind CSS を使用したモダンなウェブアプリケーションです。
 
 ## 機能
