@@ -32,7 +32,10 @@ const LEGEND_ITEMS: LegendItem[] = [
 
 export function Visualizer({ sortHistory, max, step }: Props) {
   return (
-    <div id="visualizer">
+    <div
+      id="visualizer"
+      className="m-4 mt-1 flex h-full w-auto flex-col bg-neutral-300 p-4"
+    >
       <Step step={step} max={sortHistory.length - 1} />
       <Legend items={LEGEND_ITEMS} />
       <Chart max={max} sortHistorySteps={sortHistory} step={step} />

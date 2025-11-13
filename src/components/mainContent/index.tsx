@@ -72,12 +72,13 @@ export function MainContent() {
   return (
     <main className="@container mx-auto px-6 @3xl:px-0">
       <div className="min-h-[80vh] py-10">
-        <Button id="playbutton" onClick={togglePlaying}>
+        <Button id="play_stop_button" className="mr-5" onClick={togglePlaying}>
           {playing ? 'stop' : 'play'}
         </Button>
 
         <Button
-          id="shuffle"
+          id="shuffle_button"
+          className="mr-5"
           onClick={() => {
             setArray(generateRandomArray(state.size, state.min, state.max));
             turnOffPlaying();
@@ -90,7 +91,8 @@ export function MainContent() {
         </Button>
 
         <Button
-          id="prev"
+          id="prev_step_button"
+          className="mr-5"
           onClick={() => {
             turnOffPlaying();
             decStep();
@@ -100,7 +102,7 @@ export function MainContent() {
         </Button>
 
         <Button
-          id="next"
+          id="next_step_button"
           onClick={() => {
             turnOffPlaying();
             incStep();

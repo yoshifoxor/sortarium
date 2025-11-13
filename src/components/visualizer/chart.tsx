@@ -29,11 +29,7 @@ export function Chart({ max, sortHistorySteps, step }: Props) {
   // console.log(array);
 
   return (
-    <div
-      className={`
-        m-4 mt-1 flex h-[80vh] w-auto flex-row items-end bg-neutral-300 p-4
-      `}
-    >
+    <div className="flex h-[45vh] flex-row items-end">
       {array.map((value, index) => {
         const width = 100 / size;
         const height = (value / max) * 100;
