@@ -7,7 +7,9 @@ import { ThemeToggler } from './themeToggler';
 export function Header() {
   return (
     <header
-      className="top-0 z-50 mb-2 h-8 w-full p-0 shadow-lg backdrop-blur-sm"
+      className={`
+        fixed top-0 z-50 mb-2 h-8 w-full p-0 shadow-lg backdrop-blur-sm
+      `}
     >
       <div className="@container px-6 @3xl:px-0">
         <div className="flex h-max items-center">
