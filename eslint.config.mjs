@@ -17,16 +17,14 @@ export default [
     ignores: [
       '**/tsconfig.json',
       '**/eslint.config.mjs',
-      '**/next.config.mjs',
-      '**/postcss.config.mjs',
-      '**/prettier.config.mjs',
       '**/next-env.d.ts',
       '**/tailwind.config.ts',
       '**/bin/',
       '**/build/',
-      '**/obj/',
       '**/out/',
       '**/.next/',
+      '**/node_modules/',
+      '**/components/ui/**',
     ],
   },
   {
