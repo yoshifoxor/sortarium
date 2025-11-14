@@ -3,6 +3,8 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { BubbleSort } from '@/algorithms/bubbleSort/index';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Slider } from '@/components/ui/slider';
 import { Visualizer } from '@/components/visualizer';
 import { useCounter, useInterval, useToggle } from '@/hooks';
 import { AppState } from '@/types/index';
@@ -29,6 +31,18 @@ export function MainContent() {
       }),
     [],
   );
+
+  const setSize = useCallback((size: number) => {
+    setState((s) => {
+      return { ...s, size: size };
+    });
+  }, []);
+
+  const setDelay = useCallback((delay: number) => {
+    setState((s) => {
+      return { ...s, delayMs: delay };
+    });
+  }, []);
 
   // 現在のstate.arrayに対してソートアルゴリズムを実行し、ソート過程の全ステップの履歴を取得
   const { array, sort } = state;
@@ -73,47 +87,76 @@ export function MainContent() {
   return (
     <main className="@container mx-auto px-6 @3xl:px-0">
       <div className="min-h-[80vh] py-10">
-        <div className="m-4 mt-1 flex items-center">
-          <Button
-            id="play_stop_button"
-            className="mr-5"
-            onClick={togglePlaying}
-          >
-            {playing ? 'stop' : 'play'}
-          </Button>
-          <Button
-            id="shuffle_button"
-            className="mr-5"
-            onClick={() => {
-              setArray(generateRandomArray(state.size, state.min, state.max));
-              turnOffPlaying();
-              resetStep();
+        <Card className="mb-10 p-5 text-center">
+          <CardContent>
+            <Button
+              id="play_stop_button"
+              className="m-1 mt-3 w-[9vw]"
+              onClick={togglePlaying}
+            >
+              {playing ? 'stop' : 'play'}
+            </Button>
+            <Button
+              id="shuffle_button"
+              className="m-1 mt-3 w-[9vw]"
+              onClick={() => {
+                setArray(generateRandomArray(state.size, state.min, state.max));
+                turnOffPlaying();
+                resetStep();
 
-              console.log(`step[0]: ${sortHistory[1].array[0]}`);
-            }}
-          >
-            shuffle
-          </Button>
-          <Button
-            id="prev_step_button"
-            className="mr-5"
-            onClick={() => {
-              turnOffPlaying();
-              decStep();
-            }}
-          >
-            {'<-'}
-          </Button>
-          <Button
-            id="next_step_button"
-            onClick={() => {
-              turnOffPlaying();
-              incStep();
-            }}
-          >
-            {'->'}
-          </Button>
-        </div>
+                console.log(`step[0]: ${sortHistory[1].array[0]}`);
+              }}
+            >
+              shuffle
+            </Button>
+            <Button
+              id="prev_step_button"
+              className="m-2 w-[4vw] flex-row"
+              onClick={() => {
+                turnOffPlaying();
+                decStep();
+              }}
+            >
+              {'<-'}
+            </Button>
+            <Button
+              id="next_step_button"
+              className="m-2 w-[4vw] flex-row"
+              onClick={() => {
+                turnOffPlaying();
+                incStep();
+              }}
+            >
+              {'->'}
+            </Button>
+            <div className="flex flex-col items-center justify-center">
+              <p className="mt-3">Array Size: {state.size}</p>
+              <Slider
+                id="slider_array_size"
+                className="mt-3"
+                defaultValue={[state.size]}
+                min={10}
+                max={100}
+                onValueChange={([size]: number[]) => {
+                  setSize(size);
+                  resetStep();
+                  turnOffPlaying();
+                }}
+              />
+              <p className="mt-3">Delay: {state.delayMs} ms</p>
+              <Slider
+                id="slider_delay_change"
+                className="mt-3"
+                defaultValue={[state.delayMs]}
+                min={0}
+                max={1000}
+                onValueChange={([size]: number[]) => {
+                  setDelay(size);
+                }}
+              />
+            </div>
+          </CardContent>
+        </Card>
 
         <Visualizer max={state.max} sortHistory={sortHistory} step={step} />
       </div>

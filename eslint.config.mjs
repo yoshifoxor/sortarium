@@ -27,6 +27,8 @@ export default [
       '**/obj/',
       '**/out/',
       '**/.next/',
+      '**/node_modules/',
+      '**/ui/',
     ],
   },
   {

@@ -22,7 +22,7 @@ function LegendItem({ id, color, label }: LegendItemProps) {
 
 export function Legend({ items }: Props) {
   return (
-    <div id="legend" className="flex w-auto flex-col">
+    <div id="legend" className="flex w-[25vw]">
       {items.map((item, index) => (
         <LegendItem
           id={`legend_item[${index}]`}
