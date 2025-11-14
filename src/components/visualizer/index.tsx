@@ -14,7 +14,7 @@ type Props = {
 const LEGEND_ITEMS: LegendItem[] = [
   {
     color: ElementStatus.WAITING.color,
-    label: 'Unsorted',
+    label: 'UNSORTED',
   },
   {
     color: ElementStatus.SORTED.color,

@@ -1,5 +1,5 @@
 'use client';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { BubbleSort } from '@/algorithms/bubbleSort/index';
 import { Button } from '@/components/ui/button';
@@ -15,7 +15,7 @@ export function MainContent() {
     array: [],
     min: 10,
     max: 100,
-    size: 25,
+    size: 50,
     delayMs: 0,
     sort: BubbleSort,
   });
@@ -31,7 +31,8 @@ export function MainContent() {
   );
 
   // 現在のstate.arrayに対してソートアルゴリズムを実行し、ソート過程の全ステップの履歴を取得
-  const sortHistory = state.sort(state.array);
+  const { array, sort } = state;
+  const sortHistory = useMemo(() => sort(array), [array, sort]);
 
   // ソート可視化のステップ管理（現在のステップ、次へ、前へ、リセット）を取得
   // 初期値: 0、最小値: 0、最大値: sortHistoryの長さ-1
@@ -47,7 +48,7 @@ export function MainContent() {
   // state.sizeやmin/maxが変わると、新しいランダム配列を生成してリセット
   useEffect(() => {
     setArray(generateRandomArray(state.size, state.min, state.max));
-  }, [state.min, state.max, state.size, setArray, resetStep]);
+  }, [state.min, state.max, state.size, setArray]);
 
   // ソート再生状態を管理（再生中/停止中、トグル、停止）
   const [playing, togglePlaying, , turnOffPlaying] = useToggle(false);
@@ -72,44 +73,47 @@ export function MainContent() {
   return (
     <main className="@container mx-auto px-6 @3xl:px-0">
       <div className="min-h-[80vh] py-10">
-        <Button id="play_stop_button" className="mr-5" onClick={togglePlaying}>
-          {playing ? 'stop' : 'play'}
-        </Button>
+        <div className="m-4 mt-1 flex items-center">
+          <Button
+            id="play_stop_button"
+            className="mr-5"
+            onClick={togglePlaying}
+          >
+            {playing ? 'stop' : 'play'}
+          </Button>
+          <Button
+            id="shuffle_button"
+            className="mr-5"
+            onClick={() => {
+              setArray(generateRandomArray(state.size, state.min, state.max));
+              turnOffPlaying();
+              resetStep();
 
-        <Button
-          id="shuffle_button"
-          className="mr-5"
-          onClick={() => {
-            setArray(generateRandomArray(state.size, state.min, state.max));
-            turnOffPlaying();
-            resetStep();
-
-            console.log(`step[0]: ${sortHistory[1].array[0]}`);
-          }}
-        >
-          shuffle
-        </Button>
-
-        <Button
-          id="prev_step_button"
-          className="mr-5"
-          onClick={() => {
-            turnOffPlaying();
-            decStep();
-          }}
-        >
-          {'<-'}
-        </Button>
-
-        <Button
-          id="next_step_button"
-          onClick={() => {
-            turnOffPlaying();
-            incStep();
-          }}
-        >
-          {'->'}
-        </Button>
+              console.log(`step[0]: ${sortHistory[1].array[0]}`);
+            }}
+          >
+            shuffle
+          </Button>
+          <Button
+            id="prev_step_button"
+            className="mr-5"
+            onClick={() => {
+              turnOffPlaying();
+              decStep();
+            }}
+          >
+            {'<-'}
+          </Button>
+          <Button
+            id="next_step_button"
+            onClick={() => {
+              turnOffPlaying();
+              incStep();
+            }}
+          >
+            {'->'}
+          </Button>
+        </div>
 
         <Visualizer max={state.max} sortHistory={sortHistory} step={step} />
       </div>
