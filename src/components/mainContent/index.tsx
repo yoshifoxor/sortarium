@@ -1,7 +1,7 @@
 'use client';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { BubbleSort } from '@/algorithms/bubbleSort/index';
+import { BubbleSort, ShakerSort } from '@/algorithms';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Slider } from '@/components/ui/slider';
@@ -86,79 +86,116 @@ export function MainContent() {
 
   return (
     <main className="@container mx-auto px-6 @3xl:px-0">
-      <div className="min-h-[80vh] py-10">
-        <Card className="mb-10 p-5 text-center">
-          <CardContent>
-            <Button
-              id="play_stop_button"
-              className="m-1 mt-3 w-[9vw]"
-              onClick={togglePlaying}
-            >
-              {playing ? 'stop' : 'play'}
-            </Button>
-            <Button
-              id="shuffle_button"
-              className="m-1 mt-3 w-[9vw]"
-              onClick={() => {
-                setArray(generateRandomArray(state.size, state.min, state.max));
-                turnOffPlaying();
-                resetStep();
-
-                console.log(`step[0]: ${sortHistory[1].array[0]}`);
-              }}
-            >
-              shuffle
-            </Button>
-            <Button
-              id="prev_step_button"
-              className="m-2 w-[4vw] flex-row"
-              onClick={() => {
-                turnOffPlaying();
-                decStep();
-              }}
-            >
-              {'<-'}
-            </Button>
-            <Button
-              id="next_step_button"
-              className="m-2 w-[4vw] flex-row"
-              onClick={() => {
-                turnOffPlaying();
-                incStep();
-              }}
-            >
-              {'->'}
-            </Button>
-            <div className="flex flex-col items-center justify-center">
-              <p className="mt-3">Array Size: {state.size}</p>
-              <Slider
-                id="slider_array_size"
-                className="mt-3"
-                defaultValue={[state.size]}
-                min={10}
-                max={100}
-                onValueChange={([size]: number[]) => {
-                  setSize(size);
-                  resetStep();
+      <div className="flex-row items-center py-10 md:flex">
+        <div className="mb-10 w-auto flex-1">
+          <Card className="mb-10 p-5 text-center">
+            <CardContent>
+              <Button
+                id="play_stop_button"
+                className="m-1 mt-3 w-[9vw]"
+                onClick={togglePlaying}
+              >
+                {playing ? 'stop' : 'play'}
+              </Button>
+              <Button
+                id="shuffle_button"
+                className="m-1 mt-3 w-[9vw]"
+                onClick={() => {
+                  setArray(
+                    generateRandomArray(state.size, state.min, state.max),
+                  );
                   turnOffPlaying();
-                }}
-              />
-              <p className="mt-3">Delay: {state.delayMs} ms</p>
-              <Slider
-                id="slider_delay_change"
-                className="mt-3"
-                defaultValue={[state.delayMs]}
-                min={0}
-                max={1000}
-                onValueChange={([size]: number[]) => {
-                  setDelay(size);
-                }}
-              />
-            </div>
-          </CardContent>
-        </Card>
+                  resetStep();
 
-        <Visualizer max={state.max} sortHistory={sortHistory} step={step} />
+                  console.log(`step[0]: ${sortHistory[1].array[0]}`);
+                }}
+              >
+                shuffle
+              </Button>
+              <Button
+                id="prev_step_button"
+                className="m-3 w-[4vw]"
+                onClick={() => {
+                  turnOffPlaying();
+                  decStep();
+                }}
+              >
+                {'<-'}
+              </Button>
+              <Button
+                id="next_step_button"
+                className="m-3 w-[4vw]"
+                onClick={() => {
+                  turnOffPlaying();
+                  incStep();
+                }}
+              >
+                {'->'}
+              </Button>
+              <div className="flex flex-col items-center justify-center">
+                <p className="mt-3">Array Size: {state.size}</p>
+                <Slider
+                  id="slider_array_size"
+                  className="mt-3"
+                  defaultValue={[state.size]}
+                  min={10}
+                  max={100}
+                  onValueChange={([size]: number[]) => {
+                    setSize(size);
+                    resetStep();
+                    turnOffPlaying();
+                  }}
+                />
+                <p className="mt-3">Delay: {state.delayMs} ms</p>
+                <Slider
+                  id="slider_delay_change"
+                  className="mt-3"
+                  defaultValue={[state.delayMs]}
+                  min={0}
+                  max={1000}
+                  onValueChange={([size]: number[]) => {
+                    setDelay(size);
+                  }}
+                />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="mb-10 p-5 text-center">
+            <CardContent>
+              <ul className="mb-3 text-lg font-bold">
+                <li>Current Sort: {state.sort.name}</li>
+                <Button
+                  className="m-1 mt-3"
+                  onClick={() => {
+                    setState((s) => {
+                      return { ...s, sort: BubbleSort };
+                    });
+                    resetStep();
+                    turnOffPlaying();
+                  }}
+                >
+                  Bubble Sort
+                </Button>
+                <Button
+                  className="m-1 mt-3"
+                  onClick={() => {
+                    setState((s) => {
+                      return { ...s, sort: ShakerSort };
+                    });
+                    resetStep();
+                    turnOffPlaying();
+                  }}
+                >
+                  Shaker Sort
+                </Button>
+              </ul>
+            </CardContent>
+          </Card>
+        </div>
+        <div className="mb-10 w-full flex-2">
+          <Visualizer max={state.max} sortHistory={sortHistory} step={step} />
+        </div>
       </div>
     </main>
   );

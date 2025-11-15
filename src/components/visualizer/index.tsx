@@ -34,7 +34,7 @@ export function Visualizer({ sortHistory, max, step }: Props) {
   return (
     <div
       id="visualizer"
-      className="m-4 mt-1 flex h-[100dvh] w-auto flex-col bg-neutral-300 p-4"
+      className="m-4 mt-1 h-[90dvh] bg-neutral-300 p-4"
     >
       <Step step={step} max={sortHistory.length - 1} />
       <Legend items={LEGEND_ITEMS} />
