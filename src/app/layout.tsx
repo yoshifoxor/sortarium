@@ -1,7 +1,8 @@
 import { BioRhyme } from 'next/font/google';
 
-import type { Metadata } from 'next';
+import { ThemeProvider } from 'next-themes';
 
+import type { Metadata } from 'next';
 import './globals.css';
 
 const bioRhyme = BioRhyme({
@@ -24,8 +25,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${bioRhyme.variable} antialiased`}>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${bioRhyme.variable} antialiased`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          storageKey="theme"
+        >
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
