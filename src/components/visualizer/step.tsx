@@ -1,9 +1,9 @@
 type Props = {
-  step: number;
   max: number;
+  step: number;
 };
 
-export function Step({ step, max }: Props) {
+export function Step({ max, step }: Props) {
   return (
     <span
       className={`

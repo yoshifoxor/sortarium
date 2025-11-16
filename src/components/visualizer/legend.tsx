@@ -13,7 +13,7 @@ function LegendItem({ id, color, label }: LegendItemProps) {
   const className = cn(`mr-1 h-4 w-4 overflow-hidden rounded-full`, color);
 
   return (
-    <div id={id} className="mr-auto flex flex-row items-center">
+    <div id={id} className="mr-2 flex flex-row items-center">
       <div className={className}></div>
       <span className="text-gray-700">{label}</span>
     </div>

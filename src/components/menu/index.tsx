@@ -122,7 +122,7 @@ export function Menu({
               lg:mr-4 lg:mb-auto
             `}
           >
-            <Label htmlFor="size_slider">Array size : {size}</Label>
+            <Label className='mb-4' htmlFor="size_slider">Array size : {size}</Label>
             <Slider
               id="size_slider"
               defaultValue={[size]}
@@ -139,7 +139,7 @@ export function Menu({
               lg:mr-4 lg:mb-auto
             `}
           >
-            <Label htmlFor="delay_slider">Delay : {delayMs} ms</Label>
+            <Label className='mb-4' htmlFor="delay_slider">Delay : {delayMs} ms</Label>
             <Slider
               id="delay_slider"
               defaultValue={[delayMs]}

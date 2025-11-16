@@ -36,7 +36,7 @@ export function MainContent() {
     sort: BubbleSort,
   });
 
-    const [sortChosen, , turnOnSortChosen] = useToggle(false);
+  // const [sortChosen, , turnOnSortChosen] = useToggle(false);
 
   // 配列を更新するためのコールバック関数を作成（メモ化して不必要な再生成を防止）
   const setArray = useCallback(
@@ -61,12 +61,15 @@ export function MainContent() {
   }, []);
 
   const setSort = (sortName: string) => {
-    const sort = mapSortNameToSort(sortName, SORTS_MAPPING, BubbleSort);
-    turnOffPlaying();
-    resetStep();
-    setState((s) => {
-      return { ...s, sort: sort };
-    });
+    const sort = mapSortNameToSort(sortName, SORTS_MAPPING);
+    if (sort !== undefined) {
+      turnOffPlaying();
+      resetStep();
+      // turnOnSortChosen();
+      setState((s) => {
+        return { ...s, sort: sort };
+      });
+    }
   };
 
   // 現在のstate.arrayに対してソートアルゴリズムを実行し、ソート過程の全ステップの履歴を取得
@@ -112,6 +115,7 @@ export function MainContent() {
   return (
     <main className="m-2 flex flex-col justify-around px-6 lg:m-4 @3xl:px-0">
       <Visualizer
+        // showSteps={sortChosen}
         className="mb-2 basis-5/6 rounded-lg lg:mb-4"
         max={state.max}
         sortHistory={sortHistory}

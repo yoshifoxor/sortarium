@@ -7,10 +7,10 @@ import { Legend } from './legend';
 import { Step } from './step';
 
 type Props = {
-  sortHistory: SortHistoryStep[];
-  max: number;
-  step: number;
   className?: string;
+  max: number;
+  sortHistory: SortHistoryStep[];
+  step: number;
 };
 
 const LEGEND_ITEMS: LegendItem[] = [
@@ -32,13 +32,21 @@ const LEGEND_ITEMS: LegendItem[] = [
   },
 ];
 
-export function Visualizer({ sortHistory, max, step, className }: Props) {
+export function Visualizer({
+  className,
+  max,
+  sortHistory,
+  step,
+}: Props) {
   return (
     <div
       id="visualizer"
-      className={cn("flex w-full flex-col bg-neutral-300 p-4", className)}
+      className={cn('flex w-full flex-col bg-neutral-300 p-4', className)}
     >
-      <Step step={step} max={sortHistory.length - 1} />
+      <Step
+        step={step}
+        max={sortHistory.length - 1}
+      />
       <Legend items={LEGEND_ITEMS} />
       <Chart max={max} sortHistorySteps={sortHistory} step={step} />
     </div>
