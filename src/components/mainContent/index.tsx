@@ -2,13 +2,27 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { BubbleSort, ShakerSort } from '@/algorithms';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Slider } from '@/components/ui/slider';
+import { Menu } from '@/components/menu';
 import { Visualizer } from '@/components/visualizer';
 import { useCounter, useInterval, useToggle } from '@/hooks';
-import { AppState } from '@/types/index';
+import { AppState, SortMapping } from '@/types/index';
 import { generateRandomArray } from '@/utils/array';
+import { mapSortNameToSort } from '@/utils/sorts';
+
+const SORTS_MAPPING: SortMapping[] = [
+  {
+    name: 'Bubble Sort',
+    value: BubbleSort,
+  },
+  {
+    name: 'Shaker Sort',
+    value: ShakerSort,
+  },
+];
+
+const SORT_OPTIONS = SORTS_MAPPING.map((mapping) => {
+  return mapping.name;
+});
 
 export function MainContent() {
   // アプリケーションの状態を管理するStateを初期化
@@ -21,6 +35,8 @@ export function MainContent() {
     delayMs: 0,
     sort: BubbleSort,
   });
+
+    const [sortChosen, , turnOnSortChosen] = useToggle(false);
 
   // 配列を更新するためのコールバック関数を作成（メモ化して不必要な再生成を防止）
   const setArray = useCallback(
@@ -43,6 +59,15 @@ export function MainContent() {
       return { ...s, delayMs: delay };
     });
   }, []);
+
+  const setSort = (sortName: string) => {
+    const sort = mapSortNameToSort(sortName, SORTS_MAPPING, BubbleSort);
+    turnOffPlaying();
+    resetStep();
+    setState((s) => {
+      return { ...s, sort: sort };
+    });
+  };
 
   // 現在のstate.arrayに対してソートアルゴリズムを実行し、ソート過程の全ステップの履歴を取得
   const { array, sort } = state;
@@ -85,118 +110,42 @@ export function MainContent() {
   }, [step, sortHistory, playing, turnOffPlaying]);
 
   return (
-    <main className="@container mx-auto px-6 @3xl:px-0">
-      <div className="flex-row items-center py-10 md:flex">
-        <div className="mb-10 w-auto flex-1">
-          <Card className="mb-10 p-5 text-center">
-            <CardContent>
-              <Button
-                id="play_stop_button"
-                className="m-1 mt-3 w-[9vw]"
-                onClick={togglePlaying}
-              >
-                {playing ? 'stop' : 'play'}
-              </Button>
-              <Button
-                id="shuffle_button"
-                className="m-1 mt-3 w-[9vw]"
-                onClick={() => {
-                  setArray(
-                    generateRandomArray(state.size, state.min, state.max),
-                  );
-                  turnOffPlaying();
-                  resetStep();
-
-                  console.log(`step[0]: ${sortHistory[1].array[0]}`);
-                }}
-              >
-                shuffle
-              </Button>
-              <Button
-                id="prev_step_button"
-                className="m-3 w-[4vw]"
-                onClick={() => {
-                  turnOffPlaying();
-                  decStep();
-                }}
-              >
-                {'<-'}
-              </Button>
-              <Button
-                id="next_step_button"
-                className="m-3 w-[4vw]"
-                onClick={() => {
-                  turnOffPlaying();
-                  incStep();
-                }}
-              >
-                {'->'}
-              </Button>
-              <div className="flex flex-col items-center justify-center">
-                <p className="mt-3">Array Size: {state.size}</p>
-                <Slider
-                  id="slider_array_size"
-                  className="mt-3"
-                  defaultValue={[state.size]}
-                  min={10}
-                  max={100}
-                  onValueChange={([size]: number[]) => {
-                    setSize(size);
-                    resetStep();
-                    turnOffPlaying();
-                  }}
-                />
-                <p className="mt-3">Delay: {state.delayMs} ms</p>
-                <Slider
-                  id="slider_delay_change"
-                  className="mt-3"
-                  defaultValue={[state.delayMs]}
-                  min={0}
-                  max={1000}
-                  onValueChange={([size]: number[]) => {
-                    setDelay(size);
-                  }}
-                />
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="mb-10 p-5 text-center">
-            <CardContent>
-              <ul className="mb-3 text-lg font-bold">
-                <li>Current Sort: {state.sort.name}</li>
-                <Button
-                  className="m-1 mt-3"
-                  onClick={() => {
-                    setState((s) => {
-                      return { ...s, sort: BubbleSort };
-                    });
-                    resetStep();
-                    turnOffPlaying();
-                  }}
-                >
-                  Bubble Sort
-                </Button>
-                <Button
-                  className="m-1 mt-3"
-                  onClick={() => {
-                    setState((s) => {
-                      return { ...s, sort: ShakerSort };
-                    });
-                    resetStep();
-                    turnOffPlaying();
-                  }}
-                >
-                  Shaker Sort
-                </Button>
-              </ul>
-            </CardContent>
-          </Card>
-        </div>
-        <div className="mb-10 w-full flex-2">
-          <Visualizer max={state.max} sortHistory={sortHistory} step={step} />
-        </div>
-      </div>
+    <main className="m-2 flex flex-col justify-around px-6 lg:m-4 @3xl:px-0">
+      <Visualizer
+        className="mb-2 basis-5/6 rounded-lg lg:mb-4"
+        max={state.max}
+        sortHistory={sortHistory}
+        step={step}
+      />
+      <Menu
+        id="menu"
+        className="basis-1/6 rounded-lg"
+        size={state.size}
+        delayMs={state.delayMs}
+        playing={playing}
+        sortOptions={SORT_OPTIONS}
+        onShuffle={() => {
+          turnOffPlaying();
+          resetStep();
+          setArray(generateRandomArray(state.size, state.min, state.max));
+        }}
+        onPlayPause={togglePlaying}
+        onSizeChange={(size: [number]) => {
+          turnOffPlaying();
+          setSize(size[0]);
+          resetStep();
+        }}
+        onDelayChange={(delayMs: [number]) => setDelay(delayMs[0])}
+        onPrevStep={() => {
+          turnOffPlaying();
+          decStep();
+        }}
+        onNextStep={() => {
+          turnOffPlaying();
+          incStep();
+        }}
+        onSortChange={setSort}
+      />
     </main>
   );
 }

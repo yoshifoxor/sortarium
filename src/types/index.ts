@@ -21,3 +21,9 @@ export type LegendItem = {
   color: string;
   label: string;
 };
+
+export type SortMapping = {
+  name: string;
+  value: (_array: number[]) => SortHistoryStep[];
+};
+
