@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.1.3](https://github.com/yoshifoxor/sortarium/compare/v0.1.2...v0.1.3) (2025-11-16)
+
+
+### Features
+
+* add card and slider components ([c45b06e](https://github.com/yoshifoxor/sortarium/commit/c45b06eaab2aa921a6cb89572cdc516dbc74d57f))
+* add ShakerSort algorithm ([93263b9](https://github.com/yoshifoxor/sortarium/commit/93263b95f78648d387b65b48b93d471b194794f0))
+* add theme toggler and dropdown menu components ([23b320e](https://github.com/yoshifoxor/sortarium/commit/23b320ed087c8354e3f0b55e8643e014fe511578))
+* enhance sorting algorithms and UI components ([0fc6e1a](https://github.com/yoshifoxor/sortarium/commit/0fc6e1aa71cc5596006169f42973977a23f85dea))
+* implement bubble sort algorithm and visualization components ([0cd8bbb](https://github.com/yoshifoxor/sortarium/commit/0cd8bbb602aaa646aa7b735224d0857a38ac8411))
+* improved state management and UI updates ([55ad5d5](https://github.com/yoshifoxor/sortarium/commit/55ad5d53a219f95381fece6950e3dbe5eca6d38a))
+* update styles for main content and visualizer components ([2209e10](https://github.com/yoshifoxor/sortarium/commit/2209e1062aab910ce93154201207370578097403))
+* update UI components ([4a102a5](https://github.com/yoshifoxor/sortarium/commit/4a102a5371cc92bc20235d4cb352729f00cb018f))
+
+
+### Bug Fixes
+
+* update header className to use fixed positioning ([4135346](https://github.com/yoshifoxor/sortarium/commit/4135346439f92d7f66cdda2cd2bce4ef0711f4b3))
+
 ## [0.1.2](https://github.com/yoshifoxor/sortarium/compare/v0.1.1...v0.1.2) (2025-11-10)
 
 
