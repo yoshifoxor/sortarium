@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://github.com/yoshifoxor/sortarium/compare/v0.1.3...v0.2.0) (2025-11-24)
+
+
+### Features
+
+* change release-please configuration and manifest files ([29ffbaf](https://github.com/yoshifoxor/sortarium/commit/29ffbaff40b194bf0138b74238cea6a9d3a5a4b1))
+
 ## [0.1.3](https://github.com/yoshifoxor/sortarium/compare/v0.1.2...v0.1.3) (2025-11-16)
 
 
