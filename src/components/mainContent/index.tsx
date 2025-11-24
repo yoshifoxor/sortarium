@@ -1,7 +1,7 @@
 'use client';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { BubbleSort, SelectionSort, ShakerSort } from '@/algorithms';
+import { BubbleSort, SelectionSort, ShakerSort, QuickSort } from '@/algorithms';
 import { Menu } from '@/components/menu';
 import { Visualizer } from '@/components/visualizer';
 import { useCounter, useInterval, useToggle } from '@/hooks';
@@ -21,6 +21,10 @@ const SORTS_MAPPING: SortMapping[] = [
   {
     name: 'Selection Sort',
     value: SelectionSort,
+  },
+  {
+    name: 'Quick Sort',
+    value: QuickSort,
   },
 ];
 
