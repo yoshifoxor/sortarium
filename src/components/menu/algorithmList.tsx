@@ -14,6 +14,7 @@ export function AlgorithmList({ items, onSortChange }: Props) {
           <RadioGroupItem
             key={id}
             value={item}
+            defaultValue="Bubble Sort"
             id={`algorithm-${id}`}
             className="peer sr-only"
             onClick={() => onSortChange(item)}
