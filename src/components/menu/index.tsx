@@ -48,105 +48,63 @@ export function Menu({
         className,
       )}
     >
-      <Card className="mb-10 flex-1 p-5 text-center">
+      <Card className="mb-10 p-5 text-center">
         <CardContent>
           <div className="mb-3 flex text-lg font-bold">
             <AlgorithmList items={sortOptions} onSortChange={onSortChange} />
           </div>
         </CardContent>
       </Card>
-      <Card className="mb-10 flex-2 p-5 text-center">
-        <CardContent className="flex">
-          <div
-            id={`${id}_play_stop_button`}
-            className={`
-              mx-0 mb-4 flex-1 basis-1/6 align-middle
-              lg:mr-4 lg:mb-auto
-            `}
-          >
-            <Button
-              id="play_stop_button"
-              className="block w-full"
-              onClick={onPlayPause}
-            >
-              {playing ? 'stop' : 'play'}
-            </Button>
-          </div>
-
-          <div
-            id={`${id}_shuffle_button`}
-            className={`
-              mx-0 mb-4 flex-1 basis-1/6 align-middle
-              lg:mr-4 lg:mb-auto
-            `}
-          >
-            <Button
-              id="shuffle_button"
-              className="block w-full"
-              onClick={onShuffle}
-            >
-              shuffle
-            </Button>
-          </div>
-
-          <div
-            id={`${id}_step_buttons`}
-            className={`
-              mx-0 mb-4 flex-1 basis-1/6 align-middle
-              lg:mr-4 lg:mb-auto
-            `}
-          >
-            <div className="flex w-full flex-row">
-              <Button
-                id="prev_step_button"
-                className="mr-1 flex-1 basis-1/2"
-                onClick={onPrevStep}
-              >
-                {'<-'}
+      <Card className="flex grow flex-row place-items-center p-5 lg:mb-2">
+        <CardContent
+          className={`
+            flex w-full flex-col items-center justify-between
+            lg:flex-row
+          `}
+        >
+          <div className="flex w-full flex-col items-center lg:mr-5 lg:w-auto">
+            <div className="mr-2 mb-2 lg:mb-4">
+              <Button id="play_stop_button" onClick={onPlayPause}>
+                {playing ? 'stop' : 'play'}
+              </Button>
+              <Button id="shuffle_button" onClick={onShuffle}>
+                shuffle
               </Button>
 
-              <Button
-                id="next_step_button"
-                className="flex-1 basis-1/2"
-                onClick={onNextStep}
-              >
+              <Button id="prev_step_button" onClick={onPrevStep}>
+                {'<-'}
+              </Button>
+              <Button id="next_step_button" onClick={onNextStep}>
                 {'->'}
               </Button>
             </div>
           </div>
+          <div className="flex w-full grow flex-col lg:w-auto">
+            <div id={`${id}_size_slider`}>
+              <Label className="mb-4" htmlFor="size_slider">
+                Array size : {size}
+              </Label>
+              <Slider
+                id="size_slider"
+                defaultValue={[size]}
+                min={10}
+                max={100}
+                onValueChange={onSizeChange}
+              />
+            </div>
 
-          <div
-            id={`${id}_size_slider`}
-            className={`
-              mx-0 mb-4 flex-1 basis-1/6 align-middle
-              lg:mr-4 lg:mb-auto
-            `}
-          >
-            <Label className='mb-4' htmlFor="size_slider">Array size : {size}</Label>
-            <Slider
-              id="size_slider"
-              defaultValue={[size]}
-              min={10}
-              max={100}
-              onValueChange={onSizeChange}
-            />
-          </div>
-
-          <div
-            id={`${id}_delay_slider`}
-            className={`
-              mx-0 mb-4 flex-1 basis-1/6 align-middle
-              lg:mr-4 lg:mb-auto
-            `}
-          >
-            <Label className='mb-4' htmlFor="delay_slider">Delay : {delayMs} ms</Label>
-            <Slider
-              id="delay_slider"
-              defaultValue={[delayMs]}
-              min={0}
-              max={1000}
-              onValueChange={onDelayChange}
-            />
+            <div id={`${id}_delay_slider`} className="mb-2 w-full">
+              <Label className="mb-4" htmlFor="delay_slider">
+                Delay : {delayMs} ms
+              </Label>
+              <Slider
+                id="delay_slider"
+                defaultValue={[delayMs]}
+                min={0}
+                max={1000}
+                onValueChange={onDelayChange}
+              />
+            </div>
           </div>
         </CardContent>
       </Card>
