@@ -5,7 +5,7 @@ import {
   cleanStatuses,
   initializeSteps,
 } from '@/algorithms/helpers';
-import { SortHistoryStep } from '@/types/index';
+import { SortHistoryStep } from '@/types';
 import { swapUnsafe } from '@/utils/array';
 
 export const BubbleSort = (array: number[]): SortHistoryStep[] => {

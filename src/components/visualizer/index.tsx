@@ -1,6 +1,6 @@
 import { ElementStatus } from '@/constants';
 import { cn } from '@/lib/utils';
-import { SortHistoryStep, LegendItem } from '@/types/index';
+import { SortHistoryStep, LegendItem } from '@/types';
 
 import { Chart } from './chart';
 import { Legend } from './legend';

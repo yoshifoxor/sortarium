@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { LegendItem as Item } from '@/types/index';
+import { LegendItem as Item } from '@/types';
 
 type LegendItemProps = Item & {
   id: string;
