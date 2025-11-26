@@ -69,13 +69,36 @@ export function MainContent() {
     });
   }, []);
 
-  const setDelay = useCallback((delay: number) => {
+  const setDelay = useCallback((delay: [number]) => {
     setState((s) => {
-      return { ...s, delayMs: delay };
+      return { ...s, delayMs: delay[0] };
     });
   }, []);
 
-  const setSort = (sortName: string) => {
+  // 現在のstate.arrayに対してソートアルゴリズムを実行し、ソート過程の全ステップの履歴を取得
+  const { array, sort } = state;
+  const sortHistory = useMemo(() => sort ? sort(array) : [], [array, sort]);
+
+  // ソート可視化のステップ管理（現在のステップ、次へ、前へ、リセット）を取得
+  // 初期値: 0、最小値: 0、最大値: sortHistoryの長さ-1
+  const {count, increment, decrement, reset} = useCounter(
+    0,
+    0,
+    sortHistory.length - 1,
+  );
+
+  // reset関数をmemo化してresetStepとして保存（不必要な再生成を防止）
+  const resetStep = useCallback(reset, []);
+
+  // state.sizeやmin/maxが変わると、新しいランダム配列を生成してリセット
+  useEffect(() => {
+    setArray(generateRandomArray(state.size, state.min, state.max));
+  }, [state.min, state.max, state.size, setArray]);
+
+  // ソート再生状態を管理（再生中/停止中、トグル、停止）
+  const { value: playing, toggle: togglePlaying, turnOff: turnOffPlaying, } = useToggle(false);
+
+  const setSort = useCallback((sortName: string) => {
     const sort = mapSortNameToSort(sortName, SORTS_MAPPING);
     if (sort !== undefined) {
       turnOffPlaying();
@@ -85,35 +108,12 @@ export function MainContent() {
         return { ...s, sort: sort };
       });
     }
-  };
-
-  // 現在のstate.arrayに対してソートアルゴリズムを実行し、ソート過程の全ステップの履歴を取得
-  const { array, sort } = state;
-  const sortHistory = useMemo(() => sort(array), [array, sort]);
-
-  // ソート可視化のステップ管理（現在のステップ、次へ、前へ、リセット）を取得
-  // 初期値: 0、最小値: 0、最大値: sortHistoryの長さ-1
-  const [step, incStep, decStep, rstStep] = useCounter(
-    0,
-    0,
-    sortHistory.length - 1,
-  );
-
-  // rstStep関数をmemo化してresetStepとして保存（不必要な再生成を防止）
-  const resetStep = useCallback(rstStep, []);
-
-  // state.sizeやmin/maxが変わると、新しいランダム配列を生成してリセット
-  useEffect(() => {
-    setArray(generateRandomArray(state.size, state.min, state.max));
-  }, [state.min, state.max, state.size, setArray]);
-
-  // ソート再生状態を管理（再生中/停止中、トグル、停止）
-  const [playing, togglePlaying, , turnOffPlaying] = useToggle(false);
+  }, [resetStep, turnOffPlaying]);
 
   // playingがtrueでdelayMsごとにincStep()を実行（ソートアニメーションの自動進行）
   useInterval(
     () => {
-      incStep();
+      increment();
     },
     state.delayMs,
     playing,
@@ -122,10 +122,34 @@ export function MainContent() {
 
   // ソートが完了（ステップが最後に達した）したら、自動的に再生を停止
   useEffect(() => {
-    if (step === sortHistory.length - 1) {
+    if (count === sortHistory.length - 1) {
       turnOffPlaying();
     }
-  }, [step, sortHistory, playing, turnOffPlaying]);
+  }, [count, sortHistory, playing, turnOffPlaying]);
+
+  const onShuffle = useCallback(() => {
+    turnOffPlaying();
+    resetStep();
+    setArray(generateRandomArray(state.size, state.min, state.max));
+  }, [state.size, state.min, state.max, resetStep, setArray, turnOffPlaying]);
+
+  const onPrevStep = useCallback(() => {
+    turnOffPlaying();
+    decrement();
+  }, [decrement, turnOffPlaying]);
+
+  const onNextStep = useCallback(() => {
+    turnOffPlaying();
+    increment();
+  }, [increment, turnOffPlaying]);
+
+  const onSizeChange = useCallback((size) => {
+    turnOffPlaying();
+    setSize(size);
+    resetStep();
+  }, [turnOffPlaying, setSize, resetStep]);
+
+  const delayMs = useMemo(() => state.delayMs, [state.delayMs]);
 
   return (
     <main className="m-2 flex flex-col justify-around px-6 lg:m-4 @3xl:px-0">
@@ -134,35 +158,21 @@ export function MainContent() {
         className="rounded-lg p-4"
         max={state.max}
         sortHistory={sortHistory}
-        step={step}
+        step={count}
       />
       <Menu
         id="menu"
         className="rounded-lg p-4"
         size={state.size}
-        delayMs={state.delayMs}
+        delayMs={delayMs}
         playing={playing}
         sortOptions={SORT_OPTIONS}
-        onShuffle={() => {
-          turnOffPlaying();
-          resetStep();
-          setArray(generateRandomArray(state.size, state.min, state.max));
-        }}
+        onShuffle={onShuffle}
         onPlayPause={togglePlaying}
-        onSizeChange={(size: [number]) => {
-          turnOffPlaying();
-          setSize(size[0]);
-          resetStep();
-        }}
-        onDelayChange={(delayMs: [number]) => setDelay(delayMs[0])}
-        onPrevStep={() => {
-          turnOffPlaying();
-          decStep();
-        }}
-        onNextStep={() => {
-          turnOffPlaying();
-          incStep();
-        }}
+        onSizeChange={onSizeChange}
+        onDelayChange={setDelay}
+        onPrevStep={onPrevStep}
+        onNextStep={onNextStep}
         onSortChange={setSort}
       />
     </main>

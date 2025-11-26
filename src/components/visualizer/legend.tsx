@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 import { cn } from '@/lib/utils';
 import { LegendItem as Item } from '@/types';
 
@@ -20,7 +22,7 @@ function LegendItem({ id, color, label }: LegendItemProps) {
   );
 }
 
-export function Legend({ items }: Props) {
+export function Component({ items }: Props) {
   return (
     <div id="legend" className="flex w-[25vw]">
       {items.map((item, index) => (
@@ -34,3 +36,5 @@ export function Legend({ items }: Props) {
     </div>
   );
 }
+
+export const Legend = memo(Component);

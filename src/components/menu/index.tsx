@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
@@ -22,7 +24,7 @@ type Props = {
   onSortChange: (_option: string) => void;
 };
 
-export function Menu({
+export function Component({
   id,
   className,
   size,
@@ -116,3 +118,5 @@ export function Menu({
     </div>
   );
 }
+
+export const Menu = memo(Component);

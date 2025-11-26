@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 import { ElementStatus } from '@/constants';
 import { cn } from '@/lib/utils';
 import { ElementStatusType } from '@/types';
@@ -10,7 +12,7 @@ type Props = {
   status: ElementStatusType;
 };
 
-export function Bar({ id, width, height, className, status }: Props) {
+export function Component({ id, width, height, className, status }: Props) {
   let color: string = '';
   switch (status) {
     case ElementStatus.SWAPPING.name:
@@ -39,3 +41,5 @@ export function Bar({ id, width, height, className, status }: Props) {
     ></div>
   );
 }
+
+export const Bar = memo(Component);
