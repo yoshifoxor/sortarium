@@ -4,11 +4,11 @@ import {
   cleanStatuses,
   initializeSteps,
 } from '@/algorithms/helpers';
-import { SortHistoryStep } from '@/types';
+import { SortHistory } from '@/types';
 
-export const InsertionSort = (array: number[]): SortHistoryStep[] => {
+export const InsertionSort = (array: number[]): SortHistory => {
   const nums = array.slice();
-  let historySteps: SortHistoryStep[] = initializeSteps(nums);
+  let historySteps: SortHistory = initializeSteps(nums);
 
   for (let i = 0; i < nums.length; i++) {
     const tmp = nums[i];

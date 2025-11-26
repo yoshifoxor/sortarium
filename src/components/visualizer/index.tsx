@@ -1,7 +1,7 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { ElementStatus } from '@/constants';
 import { cn } from '@/lib/utils';
-import { SortHistoryStep, LegendItem } from '@/types';
+import { SortHistory, LegendItem } from '@/types';
 
 import { Chart } from './chart';
 import { Legend } from './legend';
@@ -10,7 +10,7 @@ import { Step } from './step';
 type Props = {
   className?: string;
   max: number;
-  sortHistory: SortHistoryStep[];
+  sortHistory: SortHistory;
   step: number;
 };
 

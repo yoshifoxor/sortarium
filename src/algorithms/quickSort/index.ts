@@ -5,10 +5,10 @@ import {
   cleanStatuses,
   initializeSteps,
 } from '@/algorithms/helpers';
-import { SortHistoryStep } from '@/types';
+import { SortHistory } from '@/types';
 
 function addToSortedRules(
-  historySteps: SortHistoryStep[],
+  historySteps: SortHistory,
   left: number,
   right: number,
   pointer: number,
@@ -27,11 +27,11 @@ function addToSortedRules(
 }
 
 function partition(
-  historySteps: SortHistoryStep[],
+  historySteps: SortHistory,
   nums: number[],
   left: number,
   right: number,
-): [number, SortHistoryStep[]] {
+): [number, SortHistory] {
   const pivot = nums[right];
   let i = left - 1;
 
@@ -58,7 +58,7 @@ function partition(
 }
 
 function quickSortRecursion(
-  historySteps: SortHistoryStep[],
+  historySteps: SortHistory,
   nums: number[],
   left: number,
   right: number,
@@ -73,9 +73,9 @@ function quickSortRecursion(
   return historySteps;
 }
 
-export const QuickSort = (array: number[]): SortHistoryStep[] => {
+export const QuickSort = (array: number[]): SortHistory => {
   const nums = array.slice();
-  let historySteps: SortHistoryStep[] = initializeSteps(nums);
+  let historySteps: SortHistory = initializeSteps(nums);
 
   historySteps = quickSortRecursion(historySteps, nums, 0, nums.length - 1);
 

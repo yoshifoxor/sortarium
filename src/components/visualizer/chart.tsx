@@ -1,11 +1,11 @@
 import { ElementStatus } from '@/constants';
-import { SortHistoryStep, ElementStatusType } from '@/types/index';
+import { SortHistory, SortHistoryStep, ElementStatusType } from '@/types/index';
 
 import { Bar } from './bar';
 
 type Props = {
   max: number;
-  sortHistorySteps: SortHistoryStep[];
+  sortHistorySteps: SortHistory;
   step: number;
 };
 

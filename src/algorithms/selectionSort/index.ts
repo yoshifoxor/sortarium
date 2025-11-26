@@ -5,12 +5,12 @@ import {
   cleanStatuses,
   initializeSteps,
 } from '@/algorithms/helpers';
-import { SortHistoryStep } from '@/types';
+import { SortHistory } from '@/types';
 import { swapUnsafe } from '@/utils/array';
 
-export const SelectionSort = (array: number[]): SortHistoryStep[] => {
+export const SelectionSort = (array: number[]): SortHistory => {
   let nums = array.slice();
-  let historySteps: SortHistoryStep[] = initializeSteps(nums);
+  let historySteps: SortHistory = initializeSteps(nums);
 
   for (let i = 0; i < nums.length - 1; i++) {
     let min = i;

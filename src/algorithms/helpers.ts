@@ -1,4 +1,4 @@
-import { SortHistoryStep } from '@/types';
+import { SortHistory } from '@/types';
 import { getLastUnsafe, swapUnsafe } from '@/utils/array';
 
 /**
@@ -6,7 +6,7 @@ import { getLastUnsafe, swapUnsafe } from '@/utils/array';
  * @param {number[]} array - ソート対象の配列
  * @returns {SortHistoryStep[]} 初期ステップを含む履歴配列
  */
-export const initializeSteps = (array: number[]): SortHistoryStep[] => {
+export const initializeSteps = (array: number[]): SortHistory => {
   return [
     {
       array: [...array],
@@ -26,7 +26,7 @@ export const initializeSteps = (array: number[]): SortHistoryStep[] => {
  * @returns {SortHistoryStep[]} 更新された履歴配列
  */
 export const addToComparing = (
-  historySteps: SortHistoryStep[],
+  historySteps: SortHistory,
   i: number,
   j: number,
 ) => {
@@ -49,7 +49,7 @@ export const addToComparing = (
  * @returns {SortHistoryStep[]} 更新された履歴配列
  */
 export const addToSorted = (
-  historySteps: SortHistoryStep[],
+  historySteps: SortHistory,
   indexes: number[],
 ) => {
   const last = getLastUnsafe(historySteps);
@@ -72,7 +72,7 @@ export const addToSorted = (
  * @returns {SortHistoryStep[]} 更新された履歴配列（交換後の配列を含む）
  */
 export const addToSwapping = (
-  historySteps: SortHistoryStep[],
+  historySteps: SortHistory,
   i: number,
   j: number,
 ) => {
@@ -95,7 +95,7 @@ export const addToSwapping = (
  * @param {SortHistoryStep[]} historySteps - これまでのソート履歴
  * @returns {SortHistoryStep[]} ステータスがクリアされた履歴配列
  */
-export const cleanStatuses = (historySteps: SortHistoryStep[]) => {
+export const cleanStatuses = (historySteps: SortHistory) => {
   const last = getLastUnsafe(historySteps);
 
   return [
