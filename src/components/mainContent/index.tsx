@@ -131,14 +131,14 @@ export function MainContent() {
     <main className="m-2 flex flex-col justify-around px-6 lg:m-4 @3xl:px-0">
       <Visualizer
         // showSteps={sortChosen}
-        className="mb-2 basis-5/6 rounded-lg lg:mb-4"
+        className="rounded-lg p-4"
         max={state.max}
         sortHistory={sortHistory}
         step={step}
       />
       <Menu
         id="menu"
-        className="basis-1/6 rounded-lg"
+        className="rounded-lg p-4"
         size={state.size}
         delayMs={state.delayMs}
         playing={playing}

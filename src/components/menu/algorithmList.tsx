@@ -15,12 +15,12 @@ export function AlgorithmList({ items, onSortChange }: Props) {
             key={id}
             value={item}
             defaultValue="Bubble Sort"
-            id={`algorithm-${id}`}
+            id={`algorithm_${id}`}
             className="peer sr-only"
             onClick={() => onSortChange(item)}
           />
           <Label
-            htmlFor={`algorithm-${id}`}
+            htmlFor={`algorithm_${id}`}
             className={`
               block cursor-pointer rounded-xl p-2 text-center select-none
               peer-data-[state=checked]:bg-blue-500

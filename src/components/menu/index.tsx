@@ -42,20 +42,25 @@ export function Menu({
       id={id}
       className={cn(
         `
-          flex w-full flex-col justify-around overflow-visible p-4 align-middle
+          flex w-full flex-col justify-around overflow-visible align-middle
           lg:flex-row
         `,
         className,
       )}
     >
-      <Card className="mb-10 p-5 text-center">
+      <Card className="mb-4 flex-1 p-5 text-center lg:mr-4">
         <CardContent>
-          <div className="mb-3 flex text-lg font-bold">
+          <div className="flex text-lg font-bold">
             <AlgorithmList items={sortOptions} onSortChange={onSortChange} />
           </div>
         </CardContent>
       </Card>
-      <Card className="flex grow flex-row place-items-center p-5 lg:mb-2">
+      <Card
+        className={`
+          mb-4 flex flex-1 grow flex-row place-items-center p-5
+          lg:ml-4
+        `}
+      >
         <CardContent
           className={`
             flex w-full flex-col items-center justify-between

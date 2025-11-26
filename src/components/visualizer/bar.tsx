@@ -3,13 +3,14 @@ import { cn } from '@/lib/utils';
 import { ElementStatusType } from '@/types';
 
 type Props = {
+  id: string;
   width: number;
   height: number;
   className: string;
   status: ElementStatusType;
 };
 
-export function Bar({ width, height, className, status }: Props) {
+export function Bar({ id, width, height, className, status }: Props) {
   let color: string = '';
   switch (status) {
     case ElementStatus.SWAPPING.name:
@@ -32,6 +33,7 @@ export function Bar({ width, height, className, status }: Props) {
 
   return (
     <div
+      id={id}
       className={cn('flex items-end', className, color)}
       style={styles}
     ></div>

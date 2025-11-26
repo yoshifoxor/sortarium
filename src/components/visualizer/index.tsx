@@ -1,3 +1,4 @@
+import { Card, CardContent } from '@/components/ui/card';
 import { ElementStatus } from '@/constants';
 import { cn } from '@/lib/utils';
 import { SortHistoryStep, LegendItem } from '@/types';
@@ -32,23 +33,26 @@ const LEGEND_ITEMS: LegendItem[] = [
   },
 ];
 
-export function Visualizer({
-  className,
-  max,
-  sortHistory,
-  step,
-}: Props) {
+export function Visualizer({ className, max, sortHistory, step }: Props) {
   return (
     <div
-      id="visualizer"
-      className={cn('flex w-full flex-col bg-neutral-300 p-4', className)}
+      className={cn(
+        `flex w-full flex-col justify-around overflow-visible align-middle`,
+        className,
+      )}
     >
-      <Step
-        step={step}
-        max={sortHistory.length - 1}
-      />
-      <Legend items={LEGEND_ITEMS} />
-      <Chart max={max} sortHistorySteps={sortHistory} step={step} />
+      <Card>
+        <CardContent>
+          <div
+            id="visualizer"
+            className={cn('flex w-full flex-col bg-neutral-300', className)}
+          >
+            <Step step={step} max={sortHistory.length - 1} />
+            <Legend items={LEGEND_ITEMS} />
+            <Chart max={max} sortHistorySteps={sortHistory} step={step} />
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
