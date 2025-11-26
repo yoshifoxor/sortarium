@@ -8,7 +8,7 @@ import { SortHistory } from '@/types';
 
 export const InsertionSort = (array: number[]): SortHistory => {
   const nums = array.slice();
-  let historySteps: SortHistory = initializeSteps(nums);
+  let historySteps = initializeSteps(nums);
 
   for (let i = 0; i < nums.length; i++) {
     const tmp = nums[i];

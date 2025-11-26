@@ -5,12 +5,12 @@ import {
   cleanStatuses,
   initializeSteps,
 } from '@/algorithms/helpers';
+import { generateFromToArray, swapUnsafe } from '@/lib/array';
 import { SortHistory } from '@/types';
-import { generateFromToArray, swapUnsafe } from '@/utils/array';
 
 export const ShakerSort = (array: number[]): SortHistory => {
   let nums = array.slice();
-  let historySteps: SortHistory = initializeSteps(nums);
+  let historySteps = initializeSteps(nums);
 
   for (let i = 0; i < nums.length / 2; i++) {
     let swapped = false;

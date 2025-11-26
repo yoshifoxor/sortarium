@@ -1,5 +1,5 @@
+import { getLastUnsafe, swapUnsafe } from '@/lib/array';
 import { SortHistory } from '@/types';
-import { getLastUnsafe, swapUnsafe } from '@/utils/array';
 
 /**
  * ソートアルゴリズムの初期ステップを作成する
