@@ -4,9 +4,8 @@ import {
   cleanStatuses,
   initializeSteps,
 } from '@/algorithms/helpers';
-import { SortHistory } from '@/types';
 
-export const InsertionSort = (array: number[]): SortHistory => {
+export const InsertionSort = (array: number[]) => {
   const nums = array.slice();
   let historySteps = initializeSteps(nums);
 

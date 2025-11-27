@@ -6,9 +6,8 @@ import {
   initializeSteps,
 } from '@/algorithms/helpers';
 import { generateFromToArray, swapUnsafe } from '@/lib/array';
-import { SortHistory } from '@/types';
 
-export const ShakerSort = (array: number[]): SortHistory => {
+export const ShakerSort = (array: number[]) => {
   let nums = array.slice();
   let historySteps = initializeSteps(nums);
 
@@ -33,10 +32,11 @@ export const ShakerSort = (array: number[]): SortHistory => {
       }
       historySteps = cleanStatuses(historySteps);
     }
+
     if (!swapped) {
       historySteps = addToSorted(
         historySteps,
-        generateFromToArray(i, nums.length - i - 2),
+        generateFromToArray(i, nums.length - i - 1),
       );
       break;
     }

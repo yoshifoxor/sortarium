@@ -6,9 +6,8 @@ import {
   initializeSteps,
 } from '@/algorithms/helpers';
 import { swapUnsafe } from '@/lib/array';
-import { SortHistory } from '@/types';
 
-export const SelectionSort = (array: number[]): SortHistory => {
+export const SelectionSort = (array: number[]) => {
   let nums = array.slice();
   let historySteps = initializeSteps(nums);
 
