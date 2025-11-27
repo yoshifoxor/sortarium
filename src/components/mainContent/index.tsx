@@ -8,6 +8,7 @@ import {
   SelectionSort,
   ShakerSort,
 } from '@/algorithms';
+import { initializeSteps } from '@/algorithms/helpers';
 import { Menu } from '@/components/menu';
 import { Visualizer } from '@/components/visualizer';
 import { useCounter, useInterval, useToggle } from '@/hooks';
@@ -51,13 +52,10 @@ export function MainContent() {
     sort: BubbleSort,
   });
 
-  // const [sortChosen, , turnOnSortChosen] = useToggle(false);
-
   // 配列を更新するためのコールバック関数を作成（メモ化して不必要な再生成を防止）
   const setArray = useCallback(
     (array: number[]) =>
       setState((s) => {
-        // 既存のstateを展開して、arrayのみを新しい値に置き換える
         return { ...s, array: array };
       }),
     [],
@@ -75,9 +73,13 @@ export function MainContent() {
     });
   }, []);
 
-  // 現在のstate.arrayに対してソートアルゴリズムを実行し、ソート過程の全ステップの履歴を取得
-  const { array, sort } = state;
-  const sortHistory = useMemo(() => sort ? sort(array) : [], [array, sort]);
+  const sortHistory = useMemo(() => {
+    if (state.sort !== undefined) {
+      return state.sort(state.array);
+    } else {
+      return initializeSteps(state.array);
+    }
+  }, [state]);
 
   // ソート可視化のステップ管理（現在のステップ、次へ、前へ、リセット）を取得
   // 初期値: 0、最小値: 0、最大値: sortHistoryの長さ-1
@@ -88,7 +90,7 @@ export function MainContent() {
   );
 
   // reset関数をmemo化してresetStepとして保存（不必要な再生成を防止）
-  const resetStep = useCallback(reset, []);
+  const resetStep = useCallback(() => reset(), [reset]);
 
   // state.sizeやmin/maxが変わると、新しいランダム配列を生成してリセット
   useEffect(() => {
@@ -96,14 +98,13 @@ export function MainContent() {
   }, [state.min, state.max, state.size, setArray]);
 
   // ソート再生状態を管理（再生中/停止中、トグル、停止）
-  const { value: playing, toggle: togglePlaying, turnOff: turnOffPlaying, } = useToggle(false);
+  const { value: playing, toggle: togglePlaying, turnOff: turnOffPlaying } = useToggle(false);
 
   const setSort = useCallback((sortName: string) => {
     const sort = mapSortNameToSort(sortName, SORTS_MAPPING);
     if (sort !== undefined) {
       turnOffPlaying();
       resetStep();
-      // turnOnSortChosen();
       setState((s) => {
         return { ...s, sort: sort };
       });
@@ -143,9 +144,9 @@ export function MainContent() {
     increment();
   }, [increment, turnOffPlaying]);
 
-  const onSizeChange = useCallback((size) => {
+  const onSizeChange = useCallback((size: number[]) => {
     turnOffPlaying();
-    setSize(size);
+    setSize(size[0]);
     resetStep();
   }, [turnOffPlaying, setSize, resetStep]);
 
@@ -154,7 +155,6 @@ export function MainContent() {
   return (
     <main className="m-2 flex flex-col justify-around px-6 lg:m-4 @3xl:px-0">
       <Visualizer
-        // showSteps={sortChosen}
         className="rounded-lg p-4"
         max={state.max}
         sortHistory={sortHistory}

@@ -1,7 +1,8 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { ElementStatus } from '@/constants';
 import { cn } from '@/lib/utils';
-import { SortHistory, LegendItem } from '@/types';
+import { LegendItem } from '@/types/legend';
+import { SortHistory } from '@/types/sortHistory';
 
 import { Chart } from './chart';
 import { Legend } from './legend';

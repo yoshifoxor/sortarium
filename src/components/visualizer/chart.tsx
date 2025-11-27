@@ -1,5 +1,6 @@
 import { ElementStatus } from '@/constants';
-import { SortHistory, SortHistoryStep, ElementStatusType } from '@/types/index';
+import { ElementStatus as ElementStatusType } from '@/types/element';
+import { SortHistory, SortHistoryStep } from '@/types/sortHistory';
 
 import { Bar } from './bar';
 
