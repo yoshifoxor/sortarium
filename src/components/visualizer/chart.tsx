@@ -1,11 +1,12 @@
 import { ElementStatus } from '@/constants';
-import { SortHistoryStep, ElementStatusType } from '@/types/index';
+import { ElementStatus as ElementStatusType } from '@/types/element';
+import { SortHistory, SortHistoryStep } from '@/types/sortHistory';
 
 import { Bar } from './bar';
 
 type Props = {
   max: number;
-  sortHistorySteps: SortHistoryStep[];
+  sortHistorySteps: SortHistory;
   step: number;
 };
 
@@ -29,7 +30,7 @@ export function Chart({ max, sortHistorySteps, step }: Props) {
   // console.log(array);
 
   return (
-    <div className="flex h-[50vh] flex-row items-end">
+    <div id='chart' className="flex h-[50vh] flex-row items-end">
       {array.map((value, index) => {
         const width = 100 / size;
         const height = (value / max) * 100;
@@ -41,6 +42,7 @@ export function Chart({ max, sortHistorySteps, step }: Props) {
 
         return (
           <Bar
+            id={`bar_${index}`}
             key={index}
             className={className}
             width={width}

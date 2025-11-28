@@ -1,31 +1,32 @@
-import { cn } from '@/lib/utils';
-import { LegendItem as Item } from '@/types/index';
+import { memo } from 'react';
 
-type LegendItemProps = Item & {
+import { cn } from '@/lib/utils';
+import { LegendItem } from '@/types/legend';
+
+type LegendItemProps = LegendItem & {
   id: string;
 };
 
 type Props = {
-  items: Item[];
+  items: LegendItem[];
 };
 
-function LegendItem({ id, color, label }: LegendItemProps) {
-  const className = cn(`mr-1 h-4 w-4 overflow-hidden rounded-full`, color);
-
+function Item({ id, color, label }: LegendItemProps) {
+  const className = cn('mr-1 h-[1rem] w-[1rem] overflow-hidden rounded-md', color);
   return (
-    <div id={id} className="mr-2 flex flex-row items-center">
+    <div id={id} className='mr-auto flex flex-row items-center'>
       <div className={className}></div>
       <span className="text-gray-700">{label}</span>
     </div>
   );
-}
+};
 
-export function Legend({ items }: Props) {
+function Component({ items }: Props) {
   return (
-    <div id="legend" className="flex w-[25vw]">
+    <div id='legend' className='flex flex-col'>
       {items.map((item, index) => (
-        <LegendItem
-          id={`legend_item[${index}]`}
+        <Item
+          id={`legend_item_${index}`}
           key={index}
           color={item.color}
           label={item.label}
@@ -33,4 +34,6 @@ export function Legend({ items }: Props) {
       ))}
     </div>
   );
-}
+};
+
+export const Legend = memo(Component);

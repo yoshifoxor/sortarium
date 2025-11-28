@@ -5,12 +5,11 @@ import {
   cleanStatuses,
   initializeSteps,
 } from '@/algorithms/helpers';
-import { SortHistoryStep } from '@/types/index';
-import { swapUnsafe } from '@/utils/array';
+import { swapUnsafe } from '@/lib/array';
 
-export const BubbleSort = (array: number[]): SortHistoryStep[] => {
+export const BubbleSort = (array: number[]) => {
   let nums = array.slice();
-  let historySteps: SortHistoryStep[] = initializeSteps(nums);
+  let historySteps = initializeSteps(nums);
 
   for (let i = 0; i < nums.length; i++) {
     for (let j = 0; j < nums.length - i - 1; j++) {
