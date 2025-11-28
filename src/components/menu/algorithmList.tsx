@@ -1,3 +1,4 @@
+import { BubbleSort } from '@/algorithms';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
@@ -8,13 +9,12 @@ type Props = {
 
 export function AlgorithmList({ items, onSortChange }: Props) {
   return (
-    <RadioGroup className="grid grid-cols-3 gap-2">
+    <RadioGroup className="grid grid-cols-3 gap-2" defaultValue="Bubble Sort">
       {items.map((item, id) => (
         <div key={id}>
           <RadioGroupItem
             key={id}
             value={item}
-            defaultValue="Bubble Sort"
             id={`algorithm_${id}`}
             className="peer sr-only"
             onClick={() => onSortChange(item)}
