@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.3.0](https://github.com/yoshifoxor/sortarium/compare/v0.2.0...v0.3.0) (2025-11-28)
+
+
+### Features
+
+* implement Insertion Sort algorithm ([1508764](https://github.com/yoshifoxor/sortarium/commit/15087644e311f68d4d9f96ffae6bce98ce2d1844))
+* implement Quick Sort algorithm ([9cb66e1](https://github.com/yoshifoxor/sortarium/commit/9cb66e1384c55542763d155b5ae25e8276a1ddc2))
+* implement Selection Sort algorithm ([b9b514c](https://github.com/yoshifoxor/sortarium/commit/b9b514c674a3f084f246cf833d401500d6875135))
+
+
+### Bug Fixes
+
+* update import paths for SortHistoryStep and LegendItem types ([ffb06e1](https://github.com/yoshifoxor/sortarium/commit/ffb06e127969b951992e91ffa75d81478ecee743))
+
 ## [0.2.0](https://github.com/yoshifoxor/sortarium/compare/v0.1.3...v0.2.0) (2025-11-24)
 
 
