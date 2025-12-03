@@ -1,8 +1,8 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { ElementStatus } from '@/constants';
 import { cn } from '@/lib/utils';
+import { SortHistory } from '@/types';
 import { LegendItem } from '@/types/legend';
-import { SortHistory } from '@/types/sortHistory';
 
 import { Chart } from './chart';
 import { Legend } from './legend';
@@ -48,7 +48,7 @@ export function Visualizer({ className, max, sortHistory, step }: Props) {
             id="visualizer"
             className={cn('flex w-full flex-col bg-neutral-300', className)}
           >
-            <Step step={step} max={sortHistory.length - 1} />
+            <Step step={step} max={sortHistory.size - 1} />
             <Legend items={LEGEND_ITEMS} />
             <Chart max={max} sortHistorySteps={sortHistory} step={step} />
           </div>

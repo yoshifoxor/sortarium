@@ -12,6 +12,8 @@ type Props = {
   id: string;
   className?: string;
   size: number;
+  minSize: number;
+  maxSize: number;
   delayMs: number;
   playing: boolean;
   sortOptions: string[];

@@ -1,31 +1,35 @@
+import { List } from 'immutable';
+
 import {
   addToComparing,
   addToSorted,
   addToSwapping,
   cleanStatuses,
   initializeSteps,
-} from '@/algorithms/helpers';
-import { generateFromToArray, swapUnsafe } from '@/lib/array';
+} from '@/features/sort/lib/helpers';
+import { SortType } from '@/features/sort/model';
+import { generateFromToArray } from '@/lib/array';
+import { getUnsafe, swapUnsafe } from '@/lib/immutable';
 
-export const ShakerSort = (array: number[]) => {
+const sort = (array: List<number>) => {
   let nums = array.slice();
   let historySteps = initializeSteps(nums);
 
-  for (let i = 0; i < nums.length / 2; i++) {
+  for (let i = 0; i < nums.size / 2; i++) {
     let swapped = false;
-    for (let j = i; j < nums.length - i - 1; j++) {
+    for (let j = i; j < nums.size - i - 1; j++) {
       historySteps = addToComparing(historySteps, j, j + 1);
-      if (nums[j] > nums[j + 1]) {
+      if (getUnsafe(nums, j) > getUnsafe(nums, j + 1)) {
         nums = swapUnsafe(nums, j, j + 1);
         historySteps = addToSwapping(historySteps, j, j + 1);
         swapped = true;
       }
       historySteps = cleanStatuses(historySteps);
     }
-    historySteps = addToSorted(historySteps, [nums.length - i - 1]);
-    for (let j = array.length - 2 - i; j > i; j--) {
+    historySteps = addToSorted(historySteps, [nums.size - i - 1]);
+    for (let j = array.size - 2 - i; j > i; j--) {
       historySteps = addToComparing(historySteps, j, j + 1);
-      if (nums[j] < nums[j - 1]) {
+      if (getUnsafe(nums, j) < getUnsafe(nums, j - 1)) {
         nums = swapUnsafe(nums, j, j - 1);
         historySteps = addToSwapping(historySteps, j, j - 1);
         swapped = true;
@@ -36,7 +40,7 @@ export const ShakerSort = (array: number[]) => {
     if (!swapped) {
       historySteps = addToSorted(
         historySteps,
-        generateFromToArray(i, nums.length - i - 1),
+        generateFromToArray(i, nums.size - i - 1),
       );
       break;
     }
@@ -45,4 +49,9 @@ export const ShakerSort = (array: number[]) => {
   }
 
   return historySteps;
+};
+
+export const ShakerSort: SortType = {
+  name: 'Shaker Sort',
+  sort,
 };
