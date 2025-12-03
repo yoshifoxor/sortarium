@@ -4,10 +4,10 @@ import { Button } from '@/components/ui/button';
 
 type Brand = 'github';
 
-type HeaderBrandLinkProps = {
+interface HeaderBrandLinkProps {
   brand: Brand;
   link: string;
-};
+}
 
 const mapBrandToIcon = (brand: Brand) => {
   switch (brand) {

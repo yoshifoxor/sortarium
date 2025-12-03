@@ -1,9 +1,10 @@
-type Props = {
-  max: number;
+interface StepProps {
   step: number;
-};
+  max: number;
+  className?: string;
+}
 
-export function Step({ max, step }: Props) {
+export function Step({ max, step }: StepProps) {
   return (
     <span
       className={`

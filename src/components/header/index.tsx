@@ -6,7 +6,7 @@ import { ThemeToggler } from './themeToggler';
 
 export function Header() {
   return (
-    <header className="top-0 z-50 h-12 w-full shadow-lg">
+    <header className="top-0 z-50 h-fit w-full shadow-lg">
         <div className="m-2 flex items-center p-2">
           <HeaderLogo />
           <div className="ml-auto flex h-5 items-center space-x-4">

@@ -7,9 +7,9 @@ type LegendItemProps = LegendItem & {
   id: string;
 };
 
-type Props = {
+interface Props {
   items: LegendItem[];
-};
+}
 
 function Item({ id, color, label }: LegendItemProps) {
   const className = cn('mr-1 h-[1rem] w-[1rem] overflow-hidden rounded-md', color);
