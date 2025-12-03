@@ -1,5 +1,33 @@
 # Changelog
 
+## [1.0.0](https://github.com/yoshifoxor/sortarium/compare/v0.3.0...v1.0.0) (2025-12-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* update configuration and type definitions for improved consistency and functionality
+* update README
+
+### Features
+
+* migrate sorting algorithms to use immutable data structures ([216bf36](https://github.com/yoshifoxor/sortarium/commit/216bf36fc7c579ab49761f4e2382142f30cc82a6))
+* update configuration and type definitions for improved consistency and functionality ([f050234](https://github.com/yoshifoxor/sortarium/commit/f050234e9bb6d6421b6f087044df7b8cb6a07f25))
+* update README ([7c5219e](https://github.com/yoshifoxor/sortarium/commit/7c5219ee051ccf8963d3314be9f06dbaf5ad1fd7))
+
+## [0.3.0](https://github.com/yoshifoxor/sortarium/compare/v0.2.0...v0.3.0) (2025-11-28)
+
+
+### Features
+
+* implement Insertion Sort algorithm ([1508764](https://github.com/yoshifoxor/sortarium/commit/15087644e311f68d4d9f96ffae6bce98ce2d1844))
+* implement Quick Sort algorithm ([9cb66e1](https://github.com/yoshifoxor/sortarium/commit/9cb66e1384c55542763d155b5ae25e8276a1ddc2))
+* implement Selection Sort algorithm ([b9b514c](https://github.com/yoshifoxor/sortarium/commit/b9b514c674a3f084f246cf833d401500d6875135))
+
+
+### Bug Fixes
+
+* update import paths for SortHistoryStep and LegendItem types ([ffb06e1](https://github.com/yoshifoxor/sortarium/commit/ffb06e127969b951992e91ffa75d81478ecee743))
+
 ## [0.2.0](https://github.com/yoshifoxor/sortarium/compare/v0.1.3...v0.2.0) (2025-11-24)
 
 
