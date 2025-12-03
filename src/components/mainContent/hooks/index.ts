@@ -28,10 +28,10 @@ function mapSortNameToSort(sortKey: string, sortsMapping: readonly SortType[]) {
 }
 
 export const useControls = (
-  size: number,
+  size: number[],
   minSize: number,
   maxSize: number,
-  setSize: (_: number) => void,
+  setSize: (_: number[]) => void,
   setArray: (_: List<number>) => void,
   onReset: () => void,
   turnOffPlaying: () => void,
@@ -41,7 +41,7 @@ export const useControls = (
   const onShuffle = useCallback(() => {
     turnOffPlaying();
     onReset();
-    setArray(List(generateRandomArray(size, minSize, maxSize)));
+    setArray(List(generateRandomArray(size[0], minSize, maxSize)));
   }, [turnOffPlaying, onReset, setArray, size, minSize, maxSize]);
 
   const onPrevStep = useCallback(() => {
@@ -55,7 +55,7 @@ export const useControls = (
   }, [increment, turnOffPlaying]);
 
   const onSizeChange = useCallback(
-    (size: number) => {
+    (size: [number]) => {
       turnOffPlaying();
       setSize(size);
       onReset();
@@ -134,7 +134,7 @@ export const useMainState = () => {
   }, [sortHistory.size, step, turnOffPlaying]);
 
   useEffect(() => {
-    setArray(List(generateRandomArray(size, min, max)));
+    setArray(List(generateRandomArray(size[0], min, max)));
   }, [min, max, size, setArray]);
 
   const controls = useControls(

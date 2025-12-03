@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils';
 
 import { AlgorithmList } from './algorithmList';
 
-type Props = {
+interface MenuProps {
   id: string;
   className?: string;
   size: number;
@@ -24,7 +24,7 @@ type Props = {
   onDelayChange: (_delayMs: [number]) => void;
   onSizeChange: (_size: [number]) => void;
   onSortChange: (_option: string) => void;
-};
+}
 
 export function Component({
   id,
@@ -40,7 +40,7 @@ export function Component({
   onDelayChange,
   onSizeChange,
   onSortChange,
-}: Props) {
+}: MenuProps) {
   return (
     <div
       id={id}
