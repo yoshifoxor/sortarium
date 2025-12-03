@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.0.0](https://github.com/yoshifoxor/sortarium/compare/v0.3.0...v1.0.0) (2025-12-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* update configuration and type definitions for improved consistency and functionality
+* update README
+
+### Features
+
+* migrate sorting algorithms to use immutable data structures ([216bf36](https://github.com/yoshifoxor/sortarium/commit/216bf36fc7c579ab49761f4e2382142f30cc82a6))
+* update configuration and type definitions for improved consistency and functionality ([f050234](https://github.com/yoshifoxor/sortarium/commit/f050234e9bb6d6421b6f087044df7b8cb6a07f25))
+* update README ([7c5219e](https://github.com/yoshifoxor/sortarium/commit/7c5219ee051ccf8963d3314be9f06dbaf5ad1fd7))
+
 ## [0.3.0](https://github.com/yoshifoxor/sortarium/compare/v0.2.0...v0.3.0) (2025-11-28)
 
 
