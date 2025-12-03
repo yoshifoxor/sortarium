@@ -12,6 +12,8 @@ type Props = {
   id: string;
   className?: string;
   size: number;
+  minSize: number;
+  maxSize: number;
   delayMs: number;
   playing: boolean;
   sortOptions: string[];
@@ -87,8 +89,8 @@ export function Component({
             </div>
           </div>
           <div className="flex w-full grow flex-col lg:w-auto">
-            <div id={`${id}_size_slider`}>
-              <Label className="mb-4" htmlFor="size_slider">
+            <div className="mb-4 w-full">
+              <Label id={`${id}_size_slider`} className="mb-4" htmlFor="size_slider">
                 Array size : {size}
               </Label>
               <Slider
@@ -100,8 +102,8 @@ export function Component({
               />
             </div>
 
-            <div id={`${id}_delay_slider`} className="mb-2 w-full">
-              <Label className="mb-4" htmlFor="delay_slider">
+            <div className="mb-4 w-full">
+              <Label id={`${id}_delay_slider`} className="mb-4" htmlFor="delay_slider">
                 Delay : {delayMs} ms
               </Label>
               <Slider

@@ -15,14 +15,15 @@ export function AlgorithmList({ items, onSortChange }: Props) {
           <RadioGroupItem
             key={id}
             value={item}
-            id={`algorithm_${id}`}
+            id={`algorithm_${id}_rgi`}
             className="peer sr-only"
             onClick={() => onSortChange(item)}
           />
           <Label
-            htmlFor={`algorithm_${id}`}
+            id='algorithm_${id}_l'
+            htmlFor={`algorithm_${id}_rgi`}
             className={`
-              block cursor-pointer rounded-xl p-2 text-center select-none
+              block cursor-pointer rounded p-2 text-center select-none
               peer-data-[state=checked]:bg-blue-500
               peer-data-[state=checked]:font-extrabold
               peer-data-[state=checked]:text-white

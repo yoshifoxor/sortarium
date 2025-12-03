@@ -1,5 +1,4 @@
 'use client';
-
 import { Menu } from '@/components/menu';
 import { Visualizer } from '@/components/visualizer';
 
@@ -7,7 +6,16 @@ import { useMainState } from './hooks';
 
 export function MainContent() {
   const [
-    { step, size, isPlaying, max, sortHistory, sortOptions, delayMs },
+    {
+      step,
+      size,
+      isPlaying,
+      min,
+      max,
+      sortHistory,
+      sortOptions,
+      delayMs,
+    },
     controls,
   ] = useMainState();
 
@@ -22,7 +30,9 @@ export function MainContent() {
       <Menu
         id="menu"
         className="rounded-lg p-4"
-        size={size}
+        size={size[0]}
+        minSize={min}
+        maxSize={max}
         delayMs={delayMs[0]}
         playing={isPlaying}
         sortOptions={sortOptions}

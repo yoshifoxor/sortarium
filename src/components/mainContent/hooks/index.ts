@@ -1,47 +1,38 @@
+'use client';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+
+import { List } from 'immutable';
 
 import {
   BubbleSort,
-  InsertionSort,
-  QuickSort,
-  SelectionSort,
-  ShakerSort,
-} from '@/algorithms';
-import { initializeSteps } from '@/algorithms/helpers';
+  SORTS,
+  SORTS_NAMES,
+} from '@/features/sort';
+import { initializeSteps } from '@/features/sort/lib/helpers';
+import { SortType } from '@/features/sort/model';
 import { useCounter, useInterval, useToggle } from '@/hooks';
 import { generateRandomArray } from '@/lib/array';
-import { mapSortNameToSort } from '@/lib/sorts';
-import { SortMapping } from '@/types';
-import { SortHistory } from '@/types/sortHistory';
+import { SortHistory } from '@/types';
 
-const SORTS_MAPPING: SortMapping[] = [
-  {
-    name: 'Bubble Sort',
-    value: BubbleSort,
-  },
-  { name: 'Insertion Sort', value: InsertionSort },
-  {
-    name: 'Quick Sort',
-    value: QuickSort,
-  },
-  {
-    name: 'Shaker Sort',
-    value: ShakerSort,
-  },
-  {
-    name: 'Selection Sort',
-    value: SelectionSort,
-  },
-];
+export interface SortMapping {
+  name: string;
+  value: (_array: number[]) => SortHistory;
+}
 
-const SORT_OPTIONS = SORTS_MAPPING.map((v) => v.name);
+function mapSortNameToSort(sortKey: string, sortsMapping: readonly SortType[]) {
+  const sortMapping = sortsMapping.find((value) => value.name === sortKey);
+  if (sortMapping !== undefined) {
+    return sortMapping.sort;
+  }
+  return undefined;
+}
 
 export const useControls = (
   size: number,
   minSize: number,
   maxSize: number,
   setSize: (_: number) => void,
-  setArray: (_: number[]) => void,
+  setArray: (_: List<number>) => void,
   onReset: () => void,
   turnOffPlaying: () => void,
   increment: () => void,
@@ -50,8 +41,8 @@ export const useControls = (
   const onShuffle = useCallback(() => {
     turnOffPlaying();
     onReset();
-    setArray(generateRandomArray(size, minSize, maxSize));
-  }, [size, minSize, maxSize, onReset, setArray, turnOffPlaying]);
+    setArray(List(generateRandomArray(size, minSize, maxSize)));
+  }, [turnOffPlaying, onReset, setArray, size, minSize, maxSize]);
 
   const onPrevStep = useCallback(() => {
     turnOffPlaying();
@@ -64,12 +55,12 @@ export const useControls = (
   }, [increment, turnOffPlaying]);
 
   const onSizeChange = useCallback(
-    (size: number[]) => {
+    (size: number) => {
       turnOffPlaying();
-      setSize(size[0]);
+      setSize(size);
       onReset();
     },
-    [setSize, onReset, turnOffPlaying],
+    [onReset, setSize, turnOffPlaying],
   );
 
   return {
@@ -82,19 +73,20 @@ export const useControls = (
 };
 
 export const useMainState = () => {
+  const [array, setArray] = useState<List<number>>(List());
   const [min] = useState(10);
-  const [max] = useState(100);
-  const [size, setSize] = useState(50);
-  const [array, setArray] = useState<number[]>(() => generateRandomArray(size, min, max));
+  const [max] = useState(500);
+  const [size, setSize] = useState([50]);
   const [delayMs, setDelayMs] = useState([0]);
-  const [sort, setSort] = useState<undefined | ((_: number[]) => SortHistory)>(() => BubbleSort);
+  const [sort, setSort] = useState<
+    undefined | ((_: List<number>) => SortHistory)
+  >(()=>BubbleSort.sort);
 
   const sortHistory = useMemo(() => {
     if (sort !== undefined) {
       return sort(array);
-    } else {
-      return initializeSteps(array);
     }
+    return initializeSteps(List(array));
   }, [array, sort]);
 
   const {
@@ -108,7 +100,7 @@ export const useMainState = () => {
     increment,
     decrement,
     reset,
-  } = useCounter(0, 0, sortHistory.length);
+  } = useCounter(0, 0, sortHistory.size - 1);
 
   const onReset = useCallback(() => reset(), [reset]);
 
@@ -125,7 +117,7 @@ export const useMainState = () => {
 
   const onSortChange = useCallback(
     (sortName: string) => {
-      const mappedSort = mapSortNameToSort(sortName, SORTS_MAPPING);
+      const mappedSort = mapSortNameToSort(sortName, SORTS);
       if (mappedSort !== undefined) {
         turnOffPlaying();
         onReset();
@@ -136,10 +128,14 @@ export const useMainState = () => {
   );
 
   useEffect(() => {
-    if (step === sortHistory.length - 1) {
+    if (step === sortHistory.size - 1) {
       turnOffPlaying();
     }
-  }, [step, turnOffPlaying, sortHistory.length]);
+  }, [sortHistory.size, step, turnOffPlaying]);
+
+  useEffect(() => {
+    setArray(List(generateRandomArray(size, min, max)));
+  }, [min, max, size, setArray]);
 
   const controls = useControls(
     size,
@@ -161,7 +157,7 @@ export const useMainState = () => {
       min,
       max,
       sortHistory,
-      sortOptions: SORT_OPTIONS,
+      sortOptions: SORTS_NAMES,
       isPlaying,
     },
     {

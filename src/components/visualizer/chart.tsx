@@ -1,14 +1,14 @@
 import { ElementStatus } from '@/constants';
+import { SortHistory, SortHistoryStep } from '@/types';
 import { ElementStatus as ElementStatusType } from '@/types/element';
-import { SortHistory, SortHistoryStep } from '@/types/sortHistory';
 
 import { Bar } from './bar';
 
-type Props = {
+interface ChartProps {
   max: number;
   sortHistorySteps: SortHistory;
   step: number;
-};
+}
 
 const getElementStatus = (index: number, sortHistoryStep: SortHistoryStep) => {
   let barStatus: ElementStatusType;
@@ -24,9 +24,14 @@ const getElementStatus = (index: number, sortHistoryStep: SortHistoryStep) => {
   return barStatus;
 };
 
-export function Chart({ max, sortHistorySteps, step }: Props) {
-  const array = sortHistorySteps[step].array;
-  const size = array.length;
+export function Chart({ max, sortHistorySteps, step }: ChartProps) {
+  const sortHistoryStep = sortHistorySteps.get(step);
+  if (sortHistoryStep === undefined) {
+    return null;
+  }
+
+  const array = sortHistoryStep.array;
+  const size = array.size;
   // console.log(array);
 
   return (
@@ -38,7 +43,7 @@ export function Chart({ max, sortHistorySteps, step }: Props) {
         const marginRight = index === size ? 'mr-0' : 'mr-[0.1rem]';
         const className = marginRight;
 
-        const status = getElementStatus(index, sortHistorySteps[step]);
+        const status = getElementStatus(index, sortHistoryStep);
 
         return (
           <Bar
