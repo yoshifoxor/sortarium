@@ -20,7 +20,7 @@ export function MainContent() {
   ] = useMainState();
 
   return (
-    <main className="m-2 flex flex-col justify-around px-6 lg:m-4 @3xl:px-0">
+    <main className="m-2 flex flex-col justify-around lg:m-4 @3xl:px-0">
       <Visualizer
         className="rounded-lg p-4"
         max={max}

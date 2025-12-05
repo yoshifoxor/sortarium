@@ -7,10 +7,6 @@ const nextConfig: NextConfig = {
   },
   reactStrictMode: true,
   poweredByHeader: false,
-  // reactCompiler: true,
-  experimental: {
-    reactCompiler: true,
-  },
 };
 
 export default nextConfig;
