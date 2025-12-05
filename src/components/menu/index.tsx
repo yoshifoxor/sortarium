@@ -21,6 +21,9 @@ interface MenuProps {
   onPlayPause: () => void;
   onPrevStep: () => void;
   onNextStep: () => void;
+  onReverse: () => void;
+  onMountain: () => void;
+  onValley: () => void;
   onDelayChange: (_delayMs: [number]) => void;
   onSizeChange: (_size: [number]) => void;
   onSortChange: (_option: string) => void;
@@ -37,6 +40,9 @@ export function Component({
   onPlayPause,
   onPrevStep,
   onNextStep,
+  onReverse,
+  onMountain,
+  onValley,
   onDelayChange,
   onSizeChange,
   onSortChange,
@@ -53,7 +59,7 @@ export function Component({
       )}
     >
       <Card className="mb-4 flex-1 basis-1/3 p-5 text-center lg:mr-4">
-        <CardContent className='px-4'>
+        <CardContent className="px-4">
           <div className="flex text-lg font-bold">
             <AlgorithmList items={sortOptions} onSortChange={onSortChange} />
           </div>
@@ -71,10 +77,12 @@ export function Component({
             lg:flex-row
           `}
         >
-          <div className={`
-            flex w-full flex-col items-center
-            lg:mr-5 lg:w-auto lg:basis-1/2
-          `}>
+          <div
+            className={`
+              flex w-full flex-col items-center
+              lg:mr-5 lg:w-auto lg:basis-1/2
+            `}
+          >
             <div className="mb-2 flex w-full justify-around lg:mr-2 lg:mb-4">
               <Button id="play_stop_button" onClick={onPlayPause}>
                 {playing ? 'stop' : 'play'}
@@ -90,10 +98,25 @@ export function Component({
                 {'->'}
               </Button>
             </div>
+            <div className="mb-2 flex w-full justify-around lg:mr-2 lg:mb-4">
+              <Button id="reverse_button" onClick={onReverse}>
+                reverse
+              </Button>
+              <Button id="mountain_button" onClick={onMountain}>
+                mountain
+              </Button>
+              <Button id="valley_button" onClick={onValley}>
+                valley
+              </Button>
+            </div>
           </div>
           <div className="flex w-full grow flex-col lg:w-auto lg:basis-1/2">
             <div className="mb-4 w-full">
-              <Label id={`${id}_size_slider`} className="mb-4" htmlFor="size_slider">
+              <Label
+                id={`${id}_size_slider`}
+                className="mb-4"
+                htmlFor="size_slider"
+              >
                 Array size : {size}
               </Label>
               <Slider
@@ -106,12 +129,17 @@ export function Component({
             </div>
 
             <div className="mb-4 w-full">
-              <Label id={`${id}_delay_slider`} className="mb-4" htmlFor="delay_slider">
+              <Label
+                id={`${id}_delay_slider`}
+                className="mb-4"
+                htmlFor="delay_slider"
+              >
                 Delay : {delayMs} ms
               </Label>
               <Slider
                 id="delay_slider"
                 defaultValue={[delayMs]}
+                value={[delayMs]}
                 min={0}
                 max={500}
                 onValueChange={onDelayChange}

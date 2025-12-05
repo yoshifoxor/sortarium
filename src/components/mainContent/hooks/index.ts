@@ -3,11 +3,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { List } from 'immutable';
 
-import {
-  BubbleSort,
-  SORTS,
-  SORTS_NAMES,
-} from '@/features/sort';
+import { BubbleSort, SORTS, SORTS_NAMES } from '@/features/sort';
 import { initializeSteps } from '@/features/sort/lib/helpers';
 import { SortType } from '@/features/sort/model';
 import { useCounter, useInterval, useToggle } from '@/hooks';
@@ -54,6 +50,50 @@ export const useControls = (
     increment();
   }, [increment, turnOffPlaying]);
 
+  const onReverse = useCallback(() => {
+    turnOffPlaying();
+    onReset();
+    setArray(
+      List(generateRandomArray(size[0], minSize, maxSize)).sort().reverse(),
+    );
+  }, [setArray, size, minSize, maxSize, onReset, turnOffPlaying]);
+
+  const oddsEvens = useCallback(
+    () =>
+      generateRandomArray(size[0], minSize, maxSize)
+        .sort((a, b) => a - b)
+        .reduce<[number[], number[]]>(
+          ([odds, evens], v) => {
+            if (v % 2 === 0) {
+              evens.push(v);
+            } else {
+              odds.push(v);
+            }
+            return [odds, evens];
+          },
+          [[], []],
+        ),
+    [size, minSize, maxSize],
+  );
+
+  const onMountain = useCallback(() => {
+    const [odds, evens] = oddsEvens();
+    const $arrayToSort = List([...odds, ...evens.reverse()]);
+
+    turnOffPlaying();
+    onReset();
+    setArray($arrayToSort);
+  }, [onReset, setArray, turnOffPlaying, oddsEvens]);
+
+  const onValley = useCallback(() => {
+    const [odds, evens] = oddsEvens();
+    const $arrayToSort = List([...odds.reverse(), ...evens]);
+
+    turnOffPlaying();
+    onReset();
+    setArray($arrayToSort);
+  }, [onReset, setArray, turnOffPlaying, oddsEvens]);
+
   const onSizeChange = useCallback(
     (size: [number]) => {
       turnOffPlaying();
@@ -64,11 +104,14 @@ export const useControls = (
   );
 
   return {
+    onReset,
     onShuffle,
-    onSizeChange,
     onPrevStep,
     onNextStep,
-    onReset,
+    onReverse,
+    onMountain,
+    onValley,
+    onSizeChange,
   } as const;
 };
 
@@ -80,7 +123,7 @@ export const useMainState = () => {
   const [delayMs, setDelayMs] = useState([0]);
   const [sort, setSort] = useState<
     undefined | ((_: List<number>) => SortHistory)
-  >(()=>BubbleSort.sort);
+  >(() => BubbleSort.sort);
 
   const sortHistory = useMemo(() => {
     if (sort !== undefined) {
@@ -135,6 +178,9 @@ export const useMainState = () => {
 
   useEffect(() => {
     setArray(List(generateRandomArray(size[0], min, max)));
+    if (size[0] <= 20) {
+      setDelayMs([200]);
+    }
   }, [min, max, size, setArray]);
 
   const controls = useControls(
