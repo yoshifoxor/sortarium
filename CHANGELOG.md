@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.1.0](https://github.com/yoshifoxor/sortarium/compare/v1.0.0...v1.1.0) (2025-12-05)
+
+
+### Features
+
+* add reverse, mountain, and valley sorting options in menu and hooks ([7558901](https://github.com/yoshifoxor/sortarium/commit/7558901221183e134c90390d3679932695a3a206))
+
+
+### Bug Fixes
+
+* update layout and styling ([29335f6](https://github.com/yoshifoxor/sortarium/commit/29335f673f8e8ad15662c720cda6a2f70c7f9d68))
+
 ## [1.0.0](https://github.com/yoshifoxor/sortarium/compare/v0.3.0...v1.0.0) (2025-12-03)
 
 
