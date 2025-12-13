@@ -3,10 +3,10 @@ import pluginNext from '@next/eslint-plugin-next';
 import pluginStylistic from '@stylistic/eslint-plugin';
 import tseslintParser from '@typescript-eslint/parser';
 import eslintConfigPrettier from 'eslint-config-prettier';
+import pluginTailwind from 'eslint-plugin-better-tailwindcss';
+import pluginImport from 'eslint-plugin-import';
 import pluginReact from 'eslint-plugin-react';
 import pluginHooks from 'eslint-plugin-react-hooks';
-import pluginImport from 'eslint-plugin-import';
-import pluginTailwind from 'eslint-plugin-better-tailwindcss';
 import tseslint from 'typescript-eslint';
 
 export default [
@@ -15,10 +15,7 @@ export default [
   },
   {
     ignores: [
-      '**/tsconfig.json',
-      '**/eslint.config.mjs',
       '**/next-env.d.ts',
-      '**/tailwind.config.ts',
       '**/bin/',
       '**/build/',
       '**/out/',
