@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/yoshifoxor/sortarium/compare/v1.1.0...v1.1.1) (2025-12-13)
+
+
+### Bug Fixes
+
+* add support for .mjs files in TypeScript configuration ([01cdff5](https://github.com/yoshifoxor/sortarium/commit/01cdff58fdbe5d4e3af6adcf970ee88e2b6a4483))
+
 ## [1.1.0](https://github.com/yoshifoxor/sortarium/compare/v1.0.0...v1.1.0) (2025-12-05)
 
 
